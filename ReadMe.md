@@ -10,7 +10,7 @@ This repo using CSX by default. Following are steps to setup VS Code with runtim
 
     ```json
     {
-        ......
+        //other settings
         "scriptcsRunner.scriptcsPath": "scriptcs"
     }
     ```
