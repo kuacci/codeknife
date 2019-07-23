@@ -1,6 +1,6 @@
 # Code Knife
 
-This repo just for code storage of leetcode.
+This repo just for code storage of leetcode and other interesting patterns.
 
 This repo using CSX by default. Following are steps to setup VS Code with runtime.
 
