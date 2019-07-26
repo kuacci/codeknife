@@ -15,7 +15,7 @@ Note:
 >1 is typically treated as an ugly number.
 2 n **does not exceed 1690.**
 
-## 思路 - 翻转链表
+## 思路
 
 Ugly Number的定义为，2，3，5中的一个数的倍数，1定义为Ugly Number. 例如，4 = **2** * 2. 3 = **3** * 3. 15 = **5** * 3  等等。 7 不是 ugly number, 因为7不能被2，3，5中任意一个数整除。
 
