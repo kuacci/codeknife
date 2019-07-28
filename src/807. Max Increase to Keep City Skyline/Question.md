@@ -34,20 +34,20 @@ gridNew = [ [8, 4, 8, 7],
 
 <table>
     <tr>
-        <td>|9|</td>
-        <td>4|</td>
-        <td>8|</td>
-        <td>7|</td>
+        <td>9</td>
+        <td>4</td>
+        <td>8</td>
+        <td>7</td>
     </tr>
 </table>
 
 从左往右扫描，skyline最大值是
 
 <table>
-    <tr><td>|8|</td></tr>
-    <tr><td>|7|</td></tr>
-    <tr><td>|9|</td></tr>
-    <tr><tD>|3|</td></tr>
+    <tr><td>8</td></tr>
+    <tr><td>7</td></tr>
+    <tr><td>9</td></tr>
+    <tr><tD>3</td></tr>
 </table>
 
 grid[0][0] = 3，Math.Min(9,8) - grid[0][0] = 5; 这个元素上大厦可以增加5。 grid[0][1] = 0，Math.Min(4,8) - grid[0][1] = 4；这个元素上大厦可以增加4。
