@@ -17,3 +17,9 @@ This repo using CSX by default. Following are steps to setup VS Code with runtim
 
 4. Create file with name like app.csx then VS Code can leverage OmniSharp extension to provide the intellisense support just like coding in visual studio.
 5. Run the code by the command of `Execute with scriptcs` or the shortcut `Ctrl + Shift + R`
+
+## Debug Script
+
+1. Locate the script file which you want to debug
+2. Bring up terminal window in the same directory, then run `scriptcs` to launch `scriptcs` as `Repl` mode
+3. In `scriptcs`, type command `:openvs "test.csx"` to launch VS and the target script. Then you will get the same experience of VS to debug script file.
