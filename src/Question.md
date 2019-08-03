@@ -40,7 +40,7 @@ This tree is also valid:
 
 ## 思路 -- 迭代
 
-
+这道题解题方式比较多，第一个example说明思路是将新的node插入到合适的位置。新的Node和当前的node进行比较。如果新的node小于当前Node, 则放在左边，反之则放在右边。一直找到node的左（右）为空的时候，接入到tree中，结束整个迭代。
 
 ## 代码
 
@@ -90,6 +90,35 @@ public class Solution {
         }
 
         return pre;
+    }
+}
+```
+
+## 思路 -- 递归
+
+仍然是第一个example。思路跟上面一样， 不过写法要简介一些。
+
+``` csharp
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public TreeNode InsertIntoBST(TreeNode root, int val) {
+
+        if(root == null) return new TreeNode(val);
+
+        if(root.val < val)
+            root.right = InsertIntoBST(root.right, val);
+        else
+            root.left = InsertIntoBST(root.left, val);
+        return root;
+
     }
 }
 ```
