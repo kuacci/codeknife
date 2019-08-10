@@ -95,3 +95,18 @@ public class Solution {
     }
 }
 ```
+
+## 思路 - 优化 sliding window
+
+sliding window的方式还有可以改进的空间。当遇到重复的字符的时候，l并不需要一步一步的增加。而是可以一次跳到重复的字符所在位置的+1.
+
+![img](image/1.jpg)
+
+如何记录重复字符所出现的位置能，可以使用一个Dictionary来记录字符出现时候，r所在的位置。因为需要l移动到重复字符的下一个位置，所以要存储的位置是r+1.
+
+![img](image/2.jpg)
+
+如果是为了记录字符所在的位置。比Dictionary更加高效的方式是可以用一个int数组。用一个int[128]来对应字符的ASCII码。
+
+![img](image/3.jpg)
+
