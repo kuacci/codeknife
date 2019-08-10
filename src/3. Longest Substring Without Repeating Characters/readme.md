@@ -23,7 +23,7 @@ Example 3:
 ```text
 Input: "pwwkew"
 Output: 3
-Explanation: The answer is "wke", with the length of 3. 
+Explanation: The answer is "wke", with the length of 3.
              Note that the answer must be a substring, "pwke" is a subsequence and not a substring.
 ```
 
@@ -110,3 +110,56 @@ sliding window的方式还有可以改进的空间。当遇到重复的字符的
 
 ![img](image/3.jpg)
 
+## 代码 - sliding window [Dictionary]
+
+```csharp
+public class Solution {
+    public int LengthOfLongestSubstring(string s)
+    {
+        int max = 0;
+
+        char[] ch = s.ToCharArray();
+        Dictionary<char, int> cpos = new Dictionary<char, int>();
+
+        for(int l = 0, r = 0; r < s.Length; r++)
+        {
+            if(cpos.ContainsKey(ch[r]))
+            {
+                l = l > cpos[ch[r]] ? l : cpos[ch[r]];
+            }
+
+            max = max > r - l + 1 ? max : r - l + 1;
+            cpos[ch[r]] = r + 1;
+
+        }
+
+        return max;
+    }
+}
+```
+
+## 代码 - sliding window [int arrar]
+
+```csharp
+public class Solution {
+    public int LengthOfLongestSubstring(string s)
+    {
+        int max = 0;
+
+        char[] ch = s.ToCharArray();
+        int[] index = new int[128];
+
+
+        for(int l = 0, r = 0; r < s.Length; r++)
+        {
+
+            l = l > index[ch[r]] ? l : index[ch[r]];
+            max = max > r - l + 1 ? max : r - l + 1;
+            index[ch[r]] = r + 1;
+
+        }
+
+        return max;
+    }
+}
+```
