@@ -5,10 +5,6 @@ get(key) - Get the value (will always be positive) of the key if the key exists 
 
 set(key, value) - Set or insert the value if the key is not already present. When the cache reached its capacity, it should invalidate the least recently used item before inserting a new item.
 
-## 参考
-
-* <http://bangbingsyb.blogspot.com/2014/11/leetcode-lru-cache.html>
-
 ## 思路
 
 1. 使用单链表将所有的 entry 连接起来。并使用 dictionary 来保存 key 与 entry 间的对应关系。
