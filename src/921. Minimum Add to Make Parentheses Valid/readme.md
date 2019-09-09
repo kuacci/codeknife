@@ -75,3 +75,44 @@ public class Solution {
     }
 }
 ```
+
+## 思路 -- 计算Count
+
+上述的思路借助了Stack来暂存`(`。仔细观察以后发现Stack在这里的作用是类似于计数器。实际上，可以使用int来代替这个Stack的作用来作计数器。
+
+```csharp
+public class Solution {
+    public int MinAddToMakeValid(string S) {
+
+        if(string.IsNullOrEmpty(S)) return 0;
+        if(S.Length == 1) return 1;
+
+        char[] pars = S.ToCharArray();
+
+        int lCount = 0;
+        int rCount = 0;
+
+        for(int i = 0; i < pars.Length; i++)
+        {
+            if(pars[i] == '(')
+            {
+                lCount++;
+            }
+            else
+            {
+                if(lCount > 0)
+                {
+                    lCount --;
+                }
+                else
+                {
+                    rCount ++;
+                }
+            }
+        }
+
+        return lCount + rCount;
+
+    }
+}
+```
