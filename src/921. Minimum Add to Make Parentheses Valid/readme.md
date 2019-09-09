@@ -39,6 +39,8 @@ Note:
 `(` 和 `)` 要成对的出现，那么就是valid. 如果先出现一个`(`，那么invalid的括号数量要+1. 还有一种可能性是`(`出现次数多，那么没有足够的`)`来匹配。那么就要算出来又多少个`(`.
 我的想法是用一个Stack来记录出现过的`(`。当后面出现`)`的时候，从Stack中消去一个`(`。如果Stack是空的情况，那么要最后invalid数数量直接+1.
 
+## 代码 - Stack
+
 ```csharp
 public class Solution {
     public int MinAddToMakeValid(string S) {
@@ -76,9 +78,11 @@ public class Solution {
 }
 ```
 
-## 思路 -- 计算Count
+## 思路 -- Count
 
 上述的思路借助了Stack来暂存`(`。仔细观察以后发现Stack在这里的作用是类似于计数器。实际上，可以使用int来代替这个Stack的作用来作计数器。
+
+## 代码 -- Count
 
 ```csharp
 public class Solution {
