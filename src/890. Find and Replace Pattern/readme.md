@@ -67,7 +67,7 @@ public class Solution {
         {
             if(!map.ContainsKey(ps[i]))
             {
-                if(map.ContainsValue(ws[i])) 
+                if(map.ContainsValue(ws[i]))
                     return false;
                 else
                     map.Add(ps[i],ws[i]);
