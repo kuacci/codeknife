@@ -4,7 +4,7 @@ In an infinite binary tree where every node has two children, the nodes are labe
 
 In the odd numbered rows (ie., the first, third, fifth,...), the labelling is left to right, while in the even numbered rows (second, fourth, sixth,...), the labelling is right to left.
 
-![img](/image/tree.png)
+![img](image/tree.png)
 
 Given the label of a node in this tree, return the labels in the path from the root of the tree to the node with that label.
 
@@ -29,7 +29,7 @@ Given the label of a node in this tree, return the labels in the path from the r
 最暴力的算法，应该是构建一个完整的树，然后依次去找他的父节点到根节点为止。但是仔细一想，其实应该可以直接计算出每个父节点的值。
 先观察一下一颗没有从左到右顺序布置的树。除了根节点之外，每一次会有一个最大值(Upper)和最小值(Lower)。数值是可以用 upper = Math.Pow(2,depth) - 1, Lower = Math.Pow(2, n - 1) 计算出来。给定一个label，就能计算出他在那一层。这种顺序配置的树，也就可以很快知道它的父节点所在的为止， parent = child / 2;
 
-![tree](/image/tree1.jpg)
+![tree](image/tree1.jpg)
 
 但是问题在于题设所给出的这种树，父节点发生了偏移。这种偏移可以需要通过计算重新定位父节点的值。
 先按照 parent = child / 2 计算出没有变化的情况下，父节点应该所在的位置。这个位置计算出来之后，计算出它跟边界值Upper的偏移量。这个偏移量是不会改变的。题设给出的树，左右旋转过后，Upper和Lower所在的位置互换了。所以父节点的位置应该换算成Lower + Offsize. 这样就能计算出父节点的位置。
