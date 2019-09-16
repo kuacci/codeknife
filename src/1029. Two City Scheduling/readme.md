@@ -40,14 +40,12 @@ $$
 \left[
  \begin{matrix}
    200 & 1000 & \\
-   400 & 1400 &
+   400 & 1400
   \end{matrix}
 \right]
 $$
 
-   [200,1000]
-   [400,1400]
-   1st 放弃去A改去B需要多花 1000 - 200 = 800. 2nd 则需要多花 1400 - 400 = 1000. 显然是让1st 去比较划算。
+   第一个人放弃去A改去B需要多花 1000 - 200 = 800. 第二个人则需要多花 1400 - 400 = 1000. 显然是让第一个人去比较划算。
 3. 把人多的一组，从顶开始将人挪到另外一组，直到人数平衡。
 
 ## 代码
@@ -112,6 +110,38 @@ public class Solution {
                 }
             }
             lst.Add(ts);
+        }
+
+}
+```
+
+## 思路 - Cost Gap
+
+上述的方法借助了2给List分别记录去A和B的人，后面进行调整的时候，借助的是去一个人A和去B的差额。对于这一点，可以在做进一步的扩展。先假设所有人都去A城市，算出来全部去A的话要多少钱。同时计算每个人去B而不去A，那么会多花或者节省多少钱，保存在一个辅助的数组里面。对这个数组进行排序。从节省钱的角度，从头取一半人取B城市。将取A的人的总费用减去去B以后省下来的费用。
+
+## 代码 - Cost Gap
+
+```csharp
+public class Solution {
+        public int TwoCitySchedCost(int[][] costs)
+        {
+            int[] costGap = new int[costs.Length];
+            int cost = 0;
+
+            for(int i = 0; i < costs.Length; i++)
+            {
+                cost += costs[i][0];    // assume all people travel to A
+                costGap[i] = costs[i][1] - costs[i][0]; // caculate the cost gap, if people don't travel to A but B.
+            }
+
+            Array.Sort(costGap);
+
+            for(int i = 0; i < costGap.Length / 2; i++)
+            {
+                cost += costGap[i];
+            }
+
+            return cost;
         }
 
 }
