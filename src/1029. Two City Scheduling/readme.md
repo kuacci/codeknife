@@ -65,13 +65,9 @@ public class Solution {
             foreach(var c in costs)
             {
                 if(c[0] < c[1])
-                {
                     Insert(left, c, 0, 1);
-                }
                 else
-                {
                     Insert(right, c, 1, 0);
-                }
             }
 
             while(left.Count != right.Count)
