@@ -1,4 +1,4 @@
-# [LeetCode] 1019. Next Greater Node In Linked List
+# 1019. Next Greater Node In Linked List
 
 We are given a linked list with head as the first node.  Let's number the nodes in the list: node_1, node_2, node_3, ... etc.
 
@@ -112,7 +112,7 @@ public class Solution {
 >**Input:**[9,8,7,6,5,4,3,2,1]
 **Output:**[0,0,0,0,0,0,0,0,0]
 
-为了优化这个过程，可以使用[monotonic stack](https://endlesslethe.com/monotone-queue-and-stack-tutorial.html). 思路是构建一个有序的堆栈，栈底最大，栈顶最小。比较时，首先比较栈顶的值是否大于当前值。如果小于这个值，则查找结束。如果大于这个值，则弹出栈顶的值，继续比较，直到找到一个比它大的值。然后再将当期值压入栈。如果一直弹到栈底为空，那么说明遍历过的右侧没有一个值比它的值大，则查找结果为0.当期值应该是最大值，压入栈。
+为了优化这个过程，可以使用[monotonic stack](https://endlesslethe.com/monotone-queue-and-stack-tutorial.html). 思路是构建一个有序的堆栈，栈底最大，栈顶最小。比较时，首先比较栈顶的值是否大于当前值。如果小于当前值，则查找结束。如果大于当前值，则弹出栈顶的值，继续比较，直到找到一个比当前值大的值。然后再将当前值压入栈。如果一直弹到栈底为空，那么说明遍历过的右侧没有一个值比它的值大，则查找结果为0.当前值应该是最大值，压入栈。
 
 这个方法可以很快的找到右侧曾经遍历过的大小值，不需要依次遍历到底。
 
@@ -129,25 +129,24 @@ public class Solution {
 public class Solution {
 
     int count = 0;
+    private Stack<int> monStack = new Stack<int>();
 
     public int[] NextLargerNodes(ListNode head) {
         if(head == null) return new int[0];
         if(head.next == null) return new int[1] {0};
 
         helper(head);
-        int[] resutl = new int[count];
+        int[] result = new int[count];
 
         int i = 0;
         while(head != null)
         {
-            resutl[i++] = head.val;
+            result[i++] = head.val;
             head = head.next;
         }
 
-        return resutl;
+        return result;
     }
-
-    private Stack<int> monStack = new Stack<int>();
 
     private void helper(ListNode node)
     {
@@ -182,4 +181,54 @@ public class Solution {
     }
 }
 
+```
+
+## 思路 - monotonic stack - non-recrusive
+
+同样是monotonic stack，非递归版。先建一个`List<int>`， 将NodeList的值都COPY到`List<int>`中, 然后从`List<int>`队列从后往前走，代替了递归的功能。
+
+```csharp
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     public ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public int[] NextLargerNodes(ListNode head) {
+
+        var result = new List<int>();
+
+        var start = head;
+        while (start != null)
+        {
+            result.Add(start.val);
+            start = start.next;
+        }
+
+        var s = new Stack<int>(result.Count);
+
+        for (int i = result.Count-1; i >= 0; i--)
+        {
+
+            int val = 0;
+            while (s.Count > 0 && result[i] >= s.Peek())
+            {
+                s.Pop();
+            }
+
+            if (s.Count > 0)
+            {
+                val = s.Peek();
+            }
+
+            s.Push(result[i]);
+            result[i] = val;
+        }
+
+        return result.ToArray();
+    }
+}
 ```
