@@ -42,8 +42,7 @@ public class Solution {
 
         for(int i = 0; i < ch.Length; i++)
         {
-            len = LenghtOfLongest(ch, i);
-            max = max > len ? max : len;
+            max = Math.Max(max,  LenghtOfLongest(ch, i));
         }
         return max;
     }
@@ -83,8 +82,7 @@ public class Solution {
             if (!clst.Contains(ch[r]))
             {
                 clst.Add(ch[r++]);
-                int len = r - l;
-                max = max > len ? max : len;
+                max = Math.Max(max, r - l);
             }
             else
             {
@@ -102,7 +100,7 @@ sliding window的方式还有可以改进的空间。当遇到重复的字符的
 
 ![img](image/1.jpg)
 
-如何记录重复字符所出现的位置能，可以使用一个Dictionary来记录字符出现时候，r所在的位置。因为需要l移动到重复字符的下一个位置，所以要存储的位置是r+1.
+如何记录重复字符所出现的位置，可以使用一个Dictionary来记录字符出现时候，r所在的位置。因为需要l移动到重复字符的下一个位置，所以要存储的位置是r+1.
 
 ![img](image/2.jpg)
 
