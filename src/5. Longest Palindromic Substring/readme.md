@@ -22,7 +22,7 @@ Note: "aba" is also a valid answer.
 * abccba - 中心线的两侧相同
 
 其他的回文字基本可以用上面的Pattern来表示了。
-我的思路是假设当前的位置是中心线所在的位置，使用双指针分别表示左侧和右侧的指针。验证左侧和右侧的字母是否相同，如果相同则继续向左右两侧移动，直到队列头/尾或者字符不等。
+我的思路是for循环从string的左侧走到右侧，并且假设当前i所在的位置是中心线所在的位置，使用双指针分别表示左侧(left)和右侧(right)的指针。验证左侧和右侧的字母是否相同，如果相同则继续向左右两侧移动，直到队列头/尾或者字符不等。
 
 ![img](image/figure.jpg)
 
@@ -41,7 +41,7 @@ Note: "aba" is also a valid answer.
     }
 ```
 
-但是这里存在一个问题，当条件满足的时候，会执行一遍 right++; i++, 那么下一次循环不满足的时候， right 和 i 实际上向右多走了一位。所有如果执行过，就需要将 right 和 i 向左移动回来一位。
+但是这里存在一个问题，当条件满足的时候，会执行一遍 right++; i++, 那么下一次循环不满足的时候， right 和 i 实际上向右多走了一位。所以如果执行过，就需要将 right 和 i 向左移动回来一位。
 
 ```csharp
     while(right < chs.Length && chs[left] == chs[right])
@@ -79,7 +79,7 @@ Note: "aba" is also a valid answer.
     }
 ```
 
-这里同样会遇到一个问题，一旦进入循环种，直到循环条件未满足的时候left 和 right都会多走一步。所有需要判断如果循环执行过，那么就需要将left 和 right 往回移动一步。
+这里同样会遇到一个问题，进入循环后直到条件未满足时left 和 right都会多走一步。因此需要判断如果循环执行过，那么就需要将left 和 right 往回移动一步。
 
 ```csharp
     while(left >= 0 && right <= chs.Length - 1 && chs[left] == chs[right])
