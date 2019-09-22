@@ -1,4 +1,4 @@
-# [LeetCode] 264. Ugly Number II
+# 264. Ugly Number II
 
 Write a program to find the n-th ugly number.
 
@@ -31,7 +31,7 @@ Ugly Number的定义为，2，3，5中的一个数的倍数，1定义为Ugly Num
 public class Solution {
     public int NthUglyNumber(int n) {
 
-        if(n == 1) return 1;
+        if(n < 1) return 0;
 
         int[] nums = new int[n];
 
@@ -43,23 +43,14 @@ public class Solution {
 
         for(int i = 1; i < n; i++)
         {
-            int n2 = nums[p2] * 2;
-            int n3 = nums[p3] * 3;
-            int n5 = nums[p5] * 5;
+            nums[i] = Math.Min(Math.Min(nums[p2] * 2,nums[p3] * 3),nums[p5] * 5);
 
-            nums[i] = min(min(n2,n3),n5);
-
-            if(nums[i] / 2 == nums[p2]) p2 +=1;
-            if(nums[i] / 3 == nums[p3]) p3 +=1;
-            if(nums[i] / 5 == nums[p5]) p5 +=1;
+            if(nums[i] / 2 == nums[p2]) p2 ++;
+            if(nums[i] / 3 == nums[p3]) p3 ++;
+            if(nums[i] / 5 == nums[p5]) p5 ++;
         }
 
         return nums[n-1];
-    }
-
-    public int min(int a, int b)
-    {
-        return a < b ? a : b;
     }
 }
 ```
