@@ -30,7 +30,7 @@ Write the code that will take a string and make this conversion given a number o
 
 ## 思路 - Sort By Row
 
-按照题目的要求，先new 多个List<char>数组，然后从上往下将字母放到对应的List<char>中，放到底部之后，方向向上，直到顶部。如此往返直到字符串都填充完。
+按照题目的要求，先new 多个`List<char>`数组，然后从上往下将字母放到对应的`List<char>`中，放到底部之后，方向向上，直到顶部。如此往返直到字符串都填充完。
 
 ## 代码 - Sort By Row
 
@@ -121,10 +121,29 @@ public class Solution
 
 1. row 0 : index =  2 * numRow - 2
 2. row numRow - 1 : index = 2 * numRow - 2 + ( numRow - 1)
-3. 有2个值交替出现 ： index = 2 * numRow - 2 - i 和 index = 2 * numRow - 2 + i
+3. 有2个值交替出现 ： `index = 2 * numRow - 2 - i` 和 `index = 2 * numRow - 2 + i`
 
 ## 代码 - Visted by row
 
 ```csharp
+public class Solution {
+    public string Convert(string s, int numRows) {
+        if (numRows == 1) return s;
+
+        StringBuilder ret = new StringBuilder();
+        char[] ch = s.ToCharArray();
+        int n = ch.Length;
+        int cycleLen = 2 * numRows - 2;
+
+        for (int i = 0; i < numRows; i++) {
+            for (int j = 0; j + i < n; j += cycleLen) {
+                ret.Append(ch[j + i]);
+                if (i != 0 && i != numRows - 1 && j + cycleLen - i < n)
+                    ret.Append(ch[j + cycleLen - i]);
+            }
+        }
+        return ret.ToString();
+    }
+}
 
 ```
