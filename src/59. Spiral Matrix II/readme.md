@@ -34,7 +34,7 @@ public class Solution
             ans[i] = new int[n];
         }
 
-        int[] bd = new int[2] { n, n - 1};          // define 2 boundaries, vertical and horizon
+        int bd = n;          // define 2 boundaries, vertical and horizon
         int[] dc = new int[4] { 1, 0, -1, 0 };      // define colume index operations in 4 direction
         int[] dr = new int[4] { 0, 1, 0, -1 };      // define row index operations in 4 direction
         int d = 0;  // direction : 0 - E; 1 - S; 2 - W; 3 - N;
@@ -44,7 +44,7 @@ public class Solution
 
         for (int i = 1; i <= count;)
         {
-            steps = bd[d % 2];
+            steps = bd;
 
             for (int move = 0; move < steps; move++)
             {
@@ -54,11 +54,12 @@ public class Solution
                 i += 1;
             }
 
-            bd[d % 2] -= 1;
             d = (d + 1) % 4;
+            bd -= d % 2;
         }
 
         return ans;
+
     }
 }
 ```
