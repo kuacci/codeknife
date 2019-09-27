@@ -66,6 +66,7 @@ public class Solution
 
         int lo = 0; // 最小值必须要大于weight数组中最大的元素的值
         int hi = 0; // 货船容量最大不会超过所有货物的总重量
+        int mid = 0;
 
         for (int i = 0; i < weights.Length; i++)
         {
@@ -75,9 +76,6 @@ public class Solution
 
         if (D <= 1) return hi;
 
-        int ans = 0;
-        int mid = 0;
-
         while (lo <= hi)
         {
             mid = (lo + hi) / 2;
@@ -86,7 +84,6 @@ public class Solution
             {
                 // 满足要求，则缩小capacity
                 hi = mid - 1;
-                ans = ans == 0 ? mid : Math.Min(ans, mid);
             }
             else
             {
@@ -95,8 +92,7 @@ public class Solution
             }
         }
 
-        return ans;
-
+        return lo;
     }
 
     // 检验假设的capacity是否能满足D天内运送完成的可能性
