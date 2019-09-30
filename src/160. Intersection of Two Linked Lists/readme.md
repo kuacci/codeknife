@@ -46,3 +46,92 @@ Explanation: The two lists do not intersect, so return null.
 * You may assume there are no cycles anywhere in the entire linked structure.
 * Your code should preferably run in O(n) time and use only O(1) memory.
 
+## 思路 - Stack
+
+将两个ListNode分别push到两个Stack中。然后比较Stack顶部的ListNode并且弹出，直到2个不相等，那么就找到他们的交汇点。
+时间复杂度 O(n+m) , 空间复杂度 O(n+m).
+
+## 代码 - Stack
+
+```csharp
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     public ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public ListNode GetIntersectionNode(ListNode headA, ListNode headB) {
+
+        if(headA == null || headB == null) return null;
+
+        Stack<ListNode> stackA = new Stack<ListNode>();
+        Stack<ListNode> stackB = new Stack<ListNode>();
+
+        ListNode tA = headA;
+        ListNode tB = headB;
+
+        while(tA != null)
+        {
+            stackA.Push(tA);
+            tA = tA.next;
+        }
+
+        while(tB != null)
+        {
+            stackB.Push(tB);
+            tB = tB.next;
+        }
+
+        if(stackA.Peek() != stackB.Peek()) return null;
+
+        while(stackA.Count > 0 && stackB.Count >0)
+        {
+            if(stackA.Peek() != stackB.Peek()) break;
+
+            tA = stackA.Pop();
+            tB = stackB.Pop();
+        }
+
+        return tA;
+
+    }
+}
+```
+
+## 思路 - 双指针-模拟环形链表
+
+采用双指针，分别用crtA和crtB指向headA和headB，指针同时向后走，如果走到链表的尾部，则走向另外一个ListNode的header.从而模拟一个环形链表，但是又不会改变ListNode的结构。如果两个ListNode相交与一点，那么这两个指针迟早要在相交的相遇。
+不过这里有个bug，如果两个ListNode没有交汇点，那么会陷入死循环。
+时间复杂度O(n+m), 空间复杂度O(1).
+
+## 代码 - 双指针-模拟环形链表
+
+```csharp
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     public ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public ListNode GetIntersectionNode(ListNode headA, ListNode headB) {
+        if (headA == null || headB == null)
+            return null;
+
+        ListNode crtA = headA;
+        ListNode crtB = headB;
+
+        while (crtA != crtB) {
+            crtA = (crtA == null) ? headB : crtA.next;
+            crtB = (crtB == null) ? headA : crtB.next;
+        }
+
+        return crtA;
+    }
+}
+```
