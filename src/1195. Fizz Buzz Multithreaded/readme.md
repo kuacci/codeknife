@@ -32,7 +32,7 @@ Implement a multithreaded version of FizzBuzz with **four** threads. The same in
 * If the number is divisible by both 3 and 5, output "fizzbuzz".
 * else, output the number
 
-这里的问题在于, 实现上述4中条件的method需要由4个线程分别执行。因此需要考虑多线程时候的线程同步问题。即，i一直在自加，但是同一时间应该只有一个线程在输出，而另外几个线程则不会有输出。
+这里的问题在于, 实现上述4中条件的method需要由4个线程分别执行，而i的值只有1个，由4个线程共享。因此需要考虑多线程时候的线程同步问题。即，i一直在自加，但是同一时间应该只有一个线程在输出，而另外几个线程则不会有输出。
 
 这种场景的需求可以使用 [System.Threading.Barrier](https://docs.microsoft.com/en-us/dotnet/api/system.threading.barrier?view=netframework-4.8)
 
