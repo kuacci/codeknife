@@ -16,7 +16,7 @@ Output:
 
 ## 思路
 
-跟 [# 885. Spiral Matrix III](../885.%20Spiral%20Matrix%20III#思路---优化) 的思路很类似。重点是在于边界值的设定。这里设定了2条边界，vertical 和 horizon。每次碰到边界的时候对应方向的边界值 -1 即可。
+跟 [# 885. Spiral Matrix III](../885.%20Spiral%20Matrix%20III#思路---优化) 的思路很类似。重点是在于边界值的设定。初始值，边界值是n, 可以往前走n步。当方向从vertical 变化为 horizon的时候，边界值-1, 就要少往前走一步。`bd -= d % 2;`
 ![img](image/figure1.png)
 
 ## 代码
