@@ -16,7 +16,7 @@ For example, given n = 3, a solution set is:
 
 ## 思路 - 回溯算法
 
-这道题目跟[17. Letter Combinations of a Phone Number](../17.%20Letter%20Combinations%20of%20a%20Phone%20Number). 要通过回溯算法遍历所有的可能性。区别点是：
+这道题目跟[17. Letter Combinations of a Phone Number](../17.%20Letter%20Combinations%20of%20a%20Phone%20Number)很类似. 要通过回溯算法遍历所有的可能性。区别点是：
 
 1. 以'('开头。
 2. '('和')'是成对出现的。
