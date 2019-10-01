@@ -117,8 +117,7 @@ public class Solution {
         {
             for(int w = 0; w < board[0].Length; w++)
             {
-                if(board[h][w] == 'X' 
-                   && ((h == 0 || board[h-1][w] == '.') && (w == 0 || board[h][w-1] == '.')))
+                if(board[h][w] == 'X' && ((h == 0 || board[h-1][w] == '.') && (w == 0 || board[h][w-1] == '.')))
                     count++;
             }
         }
