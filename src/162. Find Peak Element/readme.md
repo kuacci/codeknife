@@ -55,8 +55,10 @@ public class Solution {
 ![image](image/Find_Peak_Case1.png)
 
 情况 2 ： peak在最右端。这种情形下，先找到中间的位置 mid = (left + right) / 2. 然后比较 mid + 1的位置，右侧位置比mid的值要大，说明peak出现在更右边的位置，将left移动到mid + 1所在的位置。因为计算mid的时候是`mid = (left + right) /2`, 考虑到这种计算方式，mid事实上是偏left的。例如， left = 0， right = 1, mid = (0 + 1) /2 = 0. Left = mid + 1不会出现漏掉 peak的情况。要出现 left = mid + 1漏掉peak的情况，必须mid是peak本身。但是如果如此的话，上面  `nums[mid] < nums[right]` 的条件会先触发，那么移动的应该是right, 而不是left. Left存在着可能性peak在left位置上，这个时候，left是不会向右移动的, 而是right向左移动。
+![image](image/Find_Peak_Case2.png)
 
 情况 3 : Peak在中间的某个端点上。那么就是上面2种情况的综合。如果`nums[mid] < nums[right]`,, 那么移动right, 使其`right = mid`.  如果`nums[mid] > nums[right]`, 则是`left = mid + 1`
+![image](image/Find_Peak_Case3.png)
 
 ## 代码 - O(logN)
 
@@ -71,14 +73,14 @@ public class Solution {
 
         while(left < right)
         {
-            int pos = left + (right - left) / 2;
-            if(nums[pos] > nums[pos + 1])
+            int mid = left + (right - left) / 2;
+            if(nums[mid] > nums[mid + 1])
             {
-                right = pos;
+                right = mid;
             }
-            else if(nums[pos] < nums[pos + 1])
+            else if(nums[mid] < nums[mid + 1])
             {
-                left = pos + 1;
+                left = mid + 1;
             }
         }
 
