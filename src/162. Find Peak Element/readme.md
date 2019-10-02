@@ -37,7 +37,7 @@ public class Solution {
         if(nums == null || nums.Length <= 1) return 0;
 
         for(int i = 0; i < nums.Length - 1; i++)
-            if(nums[i] > nums[i+1]) 
+            if(nums[i] > nums[i+1])
                 return i;
         return nums.Length - 1;
     }
