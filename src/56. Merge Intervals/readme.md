@@ -144,3 +144,43 @@ public class Solution
     }
 }
 ```
+
+## 思路 - Sort
+
+还是同样的思路，不过用Array.Sort的的话，能减少很多代码。
+
+## 代码 - Sort
+
+```csharp
+    public class Solution
+    {
+        public int[][] Merge(int[][] intervals)
+        {
+            List<int[]> res = new List<int[]>();
+
+            if (intervals.Length == 0) return res.ToArray();
+
+            Array.Sort(intervals, (a, b) =>
+            {
+                if (a[0].CompareTo(b[0]) == 0) return a[1].CompareTo(b[1]);
+                return a[0].CompareTo(b[0]);
+            });
+
+            res.Add(intervals[0]);
+            for (int i = 1; i < intervals.Length; i++)
+            {
+                var resLast = res[res.Count - 1];
+                if (intervals[i][0] <= resLast[1])
+                {
+                    resLast[1] = Math.Max(intervals[i][1], resLast[1]);
+                }
+                else
+                {
+                    res.Add(intervals[i]);
+                }
+            }
+
+            return res.ToArray();
+        }
+    }
+```
