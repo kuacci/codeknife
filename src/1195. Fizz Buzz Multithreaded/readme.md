@@ -1,4 +1,4 @@
-# 1195. Fizz Buzz Multithreaded
+# [1195. Fizz Buzz Multithreaded](https://leetcode.com/problems/fizz-buzz-multithreaded/)
 
 Write a program that outputs the string representation of numbers from 1 to n, however:
 

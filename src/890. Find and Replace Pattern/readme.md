@@ -1,4 +1,4 @@
-# 890. Find and Replace Pattern
+# [890. Find and Replace Pattern](https://leetcode.com/problems/find-and-replace-pattern/)
 
 You have a list of words and a pattern, and you want to know which words in words matches the pattern.
 

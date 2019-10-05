@@ -1,4 +1,4 @@
-# 861. Score After Flipping Matrix
+# [861. Score After Flipping Matrix](https://leetcode.com/problems/score-after-flipping-matrix/)
 
 We have a two dimensional matrix A where each value is 0 or 1.
 
