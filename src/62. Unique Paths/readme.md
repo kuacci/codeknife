@@ -30,38 +30,6 @@ From the top-left corner, there are a total of 3 ways to reach the bottom-right 
 > Input: m = 7, n = 3
 > Output: 28
 
-## 思路 - backtrack
-
-每走一步都有一个选择，向右或者向下。用backtrace的方式将所有的情况都遍历一次。
-时间复杂度O(M * N). 最后的结果是timeout了。
-
-## 代码 - backtrace
-
-```csharp
-public class Solution {
-    int ans = 0;
-    public int UniquePaths(int m, int n) {
-        if(m <= 0 || n <= 0) return 0;
-        backtrack(m, n, 1, 1);
-        return ans;
-    }
-
-    private void backtrack(int m, int n, int x, int y)
-    {
-        if(m == x && n == y)
-        {
-            ans += 1;
-            return;
-        }
-
-        if(x <= m)
-            backtrack(m, n, x + 1, y);
-        if(y <= n)
-            backtrack(m, n , x, y + 1);
-    }
-}
-```
-
 ## 思路 - 动态规划
 
 观察机器人路线的可能性。
@@ -77,7 +45,7 @@ public class Solution {
 
 到这一步基本上可以确定使用dp来实现了。
 
-时间复杂度O(m * n). 好吧，还是超时了。
+时间复杂度O(2 ^ N). 好吧, 超时了。
 
 ## 代码 - 动态规划
 
@@ -94,7 +62,7 @@ public class Solution {
 
 将最终的结果与`[m,n]`的关系画张表格，结果如下。计算出这个`int[,]`最后一位的值即可。
 
-时间复杂度 `O(m * n)`,空间复杂度 `O(m * n)`. 但是通过了 ...
+时间复杂度 `O(m * n)`,空间复杂度 `O(m * n)`.
 
 ![img](image/figure3.jpg)
 
@@ -219,5 +187,4 @@ public class Solution {
     }
 
 }
-
 ```
