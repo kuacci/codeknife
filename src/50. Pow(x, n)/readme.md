@@ -75,7 +75,7 @@ public class Solution {
 ```csharp
     public double MyPow(double x, int n)
     {
-        //n = -10; 
+        //n = -10;
         double ans = 0;
 
         ans = helper(new Dictionary<int, double>(), x, n);
