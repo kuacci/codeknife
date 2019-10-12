@@ -58,3 +58,42 @@ public class Solution {
 }
 ```
 
+## 思路 - 递归
+
+从顶部进行分拆。画出一颗递归树。将n每次进行对半分解，有可能存在不能平分的情况，就要左右两边拆开。如下图：
+
+![img](image\figure1.jpg)
+
+这里要考虑的几个问题：
+
+1. 从递归树能看到有很多重复的计算，所以需要将计算结果保存到Dictionary中，后面可以重复使用。
+2. 对半拆开的时候要判断`n > 0`. 如果 `n > 0`，的情况，不能对半拆开的，一半要多加1，如果`n < 0`， 则是要 -1.
+   例如 5 要拆成 2 和 2 + 1， -5 要拆成 -2 和 (-2 - 1)
+
+## 代码 - 递归
+
+```csharp
+    public double MyPow(double x, int n)
+    {
+        //n = -10; 
+        double ans = 0;
+
+        ans = helper(new Dictionary<int, double>(), x, n);
+
+        return n > 0 ? ans : 1 / ans;
+
+    }
+
+    private double helper(Dictionary<int, double> storage, double x, int n)
+    {
+        if (n == 0) return 1;
+        if (n == 1 || n == -1) return x;
+
+        if (storage.ContainsKey(n)) return storage[n];
+
+        double left = helper(storage, x, n / 2);
+        double right = helper(storage, x, (n % 2) == 0 ? (n / 2) : (n / 2 + (n > 0 ? 1 : -1)));
+        storage.Add(n, left * right);
+        return storage[n];
+    }
+```
