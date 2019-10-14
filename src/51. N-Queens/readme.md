@@ -1,4 +1,4 @@
-# 51. N-Queens
+# [51. N-Queens](https://leetcode.com/problems/n-queens/)
 
 The n-queens puzzle is the problem of placing n queens on an n×n chessboard such that no two queens attack each other.
 
@@ -26,12 +26,12 @@ Output: [
 Explanation: There exist two distinct solutions to the 4-queens puzzle as shown above.
 ```
 
-## 思路 - back trace
+## 思路 - back track
 
-思路跟[46. Permutations](../46.%20Permutations)很类似。通过back trace来尝试各种的可能性。先假设第一列棋子的位置，然后通过递归的方式来确定第二列，以此类推。将棋子的位置暂存到中间状态的一个`IList<string> graph`对象中，如果能走到最后一列并且布置上棋子，那么就是合法的solution,所以最后才将结果保存到`IList<IList<string>> ans = new List<IList<string>>();`中。
+思路跟[46. Permutations](../46.%20Permutations)很类似。通过back track`IList<string> graph`对象中，如果能走到最后一列并且布置上棋子，那么就是合法的solution,所以最后才将结果保存到`IList<IList<string>> ans = new List<IList<string>>();`中。
 
 ```csharp
-private void backtrace(IList<string> graph, int r)
+private void backtrack(IList<string> graph, int r)
 {
     if (r == N) // valid solution
     {
@@ -51,7 +51,7 @@ private void backtrace(IList<string> graph, int r)
             string g = PrintPos(i); // get print string
             SetMatrix(r, i, 1);     // when place a queen, set matrix flag. when place next, check whether the postion is valid
             graph.Add(g);
-            backtrace(graph, r + 1);
+            backtrack(graph, r + 1);
             graph.Remove(g);        // restore print string status
             SetMatrix(r, i, -1);    // restore matrix flags
         }
@@ -105,7 +105,7 @@ private void SetMatrix(int r, int c, int num)
 }
 ```
 
-## 代码 - backtrace
+## 代码 - backtrack
 
 ```cssharp
 public class Solution
@@ -117,11 +117,11 @@ public class Solution
     {
         N = n;
         pos = new int[N, N];
-        backtrace(new List<string>(), 0);
+        backtrack(new List<string>(), 0);
         return ans;
     }
 
-    private void backtrace(IList<string> graph, int r)
+    private void backtrack(IList<string> graph, int r)
     {
         if (r == N)
         {
