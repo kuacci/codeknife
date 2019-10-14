@@ -33,6 +33,14 @@ If the fractional part is repeating, enclose the repeating part in parentheses.
 1. 数据溢出。 用int做除法有存在溢出的可能性。为了解决这个问题可以采用`decimal`.
 2. 正负数。做余的时候要考虑'+/-', 为了简单化逻辑，开始的时候就判断最终的输出结果是正还是负，然后全部转换成正数。这个步骤正如手算的时候所作的一样。
 
+数据类型选用decimal，是考虑到decimal的是用来表示高精度的浮点数。在做精度运算的时候使用decimal会比使用float得到更好的精度，但是相对的执行效率慢一些。
+
+|Name|CTS Type|Description|Significatn Figures|Ragen(approximate)|
+|:-|:-|:-|:-|:-|
+|float|System.Single|32-bit single-precision floating point|7|±1.5 × 10^45 to ±3.4 × 1038|
+|double|System.Double|64-bit double-precision floating point|15/16|±5.0 × 10^324 to ±1.7 × 10308|
+|decimal|System.Decimal|128-bit high precision decimal notation|28|±1.0 × 10^28 to ±7.9 × 1028|
+
 ## 代码 - 长除法
 
 ```csharp
