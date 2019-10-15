@@ -152,8 +152,7 @@ public class Solution {
     public int MyAtoi(string str) {
         str = str.Trim();
         if(string.IsNullOrEmpty(str)) return 0;
-        
-        
+
         bool sign = false;
         double ans = 0;
         int pos = 0;
