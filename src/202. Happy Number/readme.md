@@ -143,6 +143,52 @@ public class Solution {
 
 这里利用这个原理，一个记录器记录计算2次的值，另外一个记录计算1次的值。如果重合就break掉循环，如果是1，则返回true.
 
-## 思路 - 快慢指针
+## 代码 - 快慢指针
 
+```csharp
+public class Solution {
+    public bool IsHappy(int n)
+    {
 
+        if (n < 1) return false;
+        if (n == 1) return true;
+        int slow = n;
+        int fast = n;
+        while (true)
+        {
+            slow = FindNext(slow);
+            fast = FindNext(fast);
+            fast = FindNext(fast);
+            if (slow == 1 || fast == 1) return true;
+            if (slow == fast) break;
+        }
+        return false;
+    }
+
+    private int FindNext(int n)
+    {
+        List<int> lst = GenerateListFromNumber(n);
+        int ans = 0;
+        foreach (var i in lst)
+        {
+            ans += (int)(Math.Pow(i, 2));
+        }
+        return ans;
+    }
+
+    private List<int> GenerateListFromNumber(int n)
+    {
+        List<int> lst = new List<int>();
+        int t = n;
+
+        while (t >= 10)
+        {
+            lst.Add(t % 10);
+            t = t / 10;
+        }
+        lst.Add(t);
+
+        return lst;
+    }
+}
+```

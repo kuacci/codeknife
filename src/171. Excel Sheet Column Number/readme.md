@@ -59,13 +59,14 @@ public class Solution {
 ```csharp
 public class Solution {
     public int TitleToNumber(string s) {
-        int Ans=0,buf=0;
-        for(int i=0;i<s.Length;i++)
+        int ans=0;
+        int buf=0;
+        for(int i=0; i < s.Length; i++)
         {
-            buf=s[i]-'A'+1;
-            Ans=Ans*26+buf;
+            buf = s[i] - 'A' + 1;
+            ans = Aans * 26 + buf;
         }
-        return Ans;
+        return ans;
     }
 }
 ```

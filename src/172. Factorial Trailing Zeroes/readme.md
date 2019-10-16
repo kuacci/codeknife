@@ -29,5 +29,18 @@ Note: Your solution should be in logarithmic time complexity.
 ## 代码 - 计算5的倍数
 
 ```csharp
+public class Solution {
+    public int TrailingZeroes(int n)
+    {
+        int five = 0;
 
+        while (n >= 5)
+        {
+            n /= 5;
+            five += n;
+        }
+
+        return five;
+    }
+}
 ```

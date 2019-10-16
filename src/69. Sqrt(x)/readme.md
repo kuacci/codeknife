@@ -82,17 +82,12 @@ public class Solution {
             if (p == x) return (int)mid;
 
             if (p > x)
-            {
                 right = mid;
-            }
             else
-            {
                 left = mid;
-            }
         }
 
         return (int)left;
     }
 }
 ```
-
