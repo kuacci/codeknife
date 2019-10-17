@@ -48,3 +48,61 @@ public class Solution {
     }
 }
 ```
+
+## 思路 - 桶排序
+
+上面的思路是利用了滑动窗口。滑动窗口内的循环导致了时间复杂度达到了`O(n * min(n, k))`. 如果能降低滑动窗口内的计算次数，有机会将时间复杂度降低到`O(n)`.
+为了解决这个问题，可以借鉴桶排序。将`num[i]`装到一个小范围的bukect里面。bucket范围的确定，**这个bucket的范围由t + 1来决定**。为什么是t + 1. 因为 t 是2个数的差值。如果`t = 0` ，说明要求是无差值，两个数要相等。那么这个bucket的范围就是1. 如果 `t = 1`, bucket应该能装下2个数，左边界和有边界之差应该是1.
+
+维持一个Dictionary用来保存，使用Bucket的ID作为key. Bucket的起始值作为它的ID，它的范围可以用ID + t 快速的界定出来。这个ID的计算可以用 val / (t + 1) 得出来。 例如 nums[i] = 5, t = 4。 Bucket的起始位置在 0， 可以用 0作为它的 ID。下一个bucket的起始位置在1, 也就是当前这个bucket的结束位置。
+
+![image](image/figure1.jpg)
+
+**为负数的bucket**. 上面的情况是`nums[i] >= 0`的情况。如果为负数的情况需要将ID往左侧挪1.这是为了解决 `(-1)/5 = -0 = 0`的情况，所以整体往左侧移动1.
+
+![image](image/figure2.jpg)
+
+确定了bucket的范围，下一步是要设计如何确认2个数的差值是否为t。这里分几种情况。
+
+1. 如果2个数差的很远，他们所在的bucket也很远，可以无视。
+2. 如果一个bucket里面已经存在一个数，再往这个bucket里面放另外一个数的时候，这两个数必然小于小于k. 返回true.
+3. 
+
+## 代码 - 桶排序
+
+```csharp
+public class Solution {
+    public bool ContainsNearbyAlmostDuplicate(int[] nums, int k, int t)
+    {
+        if (k == 0 || t < 0) return false;
+
+        Dictionary<int, double> bucket = new Dictionary<int, double>();
+
+        for (int i = 0; i < nums.Length; i++)
+        {
+            int id = GetBucketId(nums[i], t);
+
+            if (bucket.ContainsKey(id))
+                return true;
+            if (bucket.ContainsKey(id - 1) && Math.Abs(nums[i] - bucket[id - 1]) <= t )
+                return true;
+            if (bucket.ContainsKey(id + 1) && Math.Abs(bucket[id + 1] - nums[i]) <= t)
+                return true;
+
+            bucket.Add(id, nums[i]);
+
+            if(i >= k)
+                bucket.Remove(GetBucketId(nums[i - k], t));
+        }
+
+        return false;
+    }
+
+    private int GetBucketId(int val, int t)
+    {
+        double id = (double)val / ((double)t + 1);
+        id = id < 0 ? id - 1 : id;
+        return (int)id;
+    }
+}
+```
