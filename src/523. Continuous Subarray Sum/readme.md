@@ -110,18 +110,15 @@ public class Solution {
 }
 ```
 
-## 思路 - Dictionary
+## [思路 - Dictionary](https://leetcode-cn.com/problems/continuous-subarray-sum/solution/lian-xu-de-zi-shu-zu-qiu-he-by-lenn123/)
 
-目前这个算法还没完全看懂，存疑。
+这里利用的是反证法。假设某段范围之间的sums(i, j)能够符合要求. 必然要求(i, j)之间的和能够被k整除。加入sums[i]是nums[0 ~ i]的和， sums[j]是nums[0 ~ j]之和，那么 i ~ j之间的和是sums[j] - sums[i]. 他们会有下面的规律 ：
 
-这里利用的是反证法。假设某段范围之间的sums能够符合要求，那么他的`sums % K == 0`，只要就不需要关心它的sums实际是多少，只要关心它到当前位置的(sum % K)是多少，如果后面的(sum % K)与前面形成了互补，即 `((sum1 % K) + (sum2 % K)) % K == 0`， 那么久返回true.
+* 我们要判断 (sums[j] - sums[i]) % k是否为0，
+* 按照mod的运算性质，`(sums[j] - sums[i]) % k == sums[j] % k - sums[i] % k`
+* 若`(sums[j] - sums[i]) % k == 0`, 则，sums[j] % k == sums[i] % k。
 
-为了降低第二层循环的时间，可以使用Dictionary,来保存到第 i 个元素为止的累积和，因为使用Dictionary的时间复杂度为O(1). 相当于用O(N)的空间复杂度置换了O(N)的空间复杂度。们对这个前缀和除以 k 取余数。原因如下：
-
-外面遍历一遍给定的数组，记录到当前为止的sum. 一旦外面找到新的sum的值（即在Dictionary中没有这个值），加入到Dictionary中。
-
-现在，假设第i个位置的sum的值为rem。如果以i为左端点的任何子数组的和是k的倍数，比如说这个位置是j, 那么Dictionary中第j个元素保存的值为`(rem + n*k) % k`, 其中n > 0. 我们会发现 `(rem+n*k)%k = rem`跟之前保存到Dictionary中的第i个元素的值是相同的。
-基于这一点观察，我们得出结论，当sum的值已经 被放入到Dictionary中，并且代表着i和j， 他们之间的元素之和是k的整数倍。所以只要存在Dictionary中存在着相同的sum%k, 就可以返回true.
+所以我们要计算是否之前已经出现过同样的 sums[i] % k 的结果即可。为了降低第二层循环的时间，可以使用Dictionary,来保存sums[i] % k 的结果，因为使用Dictionary的时间复杂度为O(1). 相当于用O(N)的空间复杂度置换了O(N)的空间复杂度。
 
 下面是nums: [2, 5, 33, 6, 7, 25, 15] k=13的求解过程。
 
@@ -130,6 +127,8 @@ public class Solution {
 ![img](image/figure5.jpg)
 ![img](image/figure6.jpg)
 ![img](image/figure7.jpg)
+
+仅仅保存曾经出现过的 sums[i] % k的结果就足够了吗? 如果是只要的话，使用`List<int>`就可以。但是为什么要用Dictionary？ 原因是 `k 可能为 0`. 上面2种方法都要应当k==0的情况。这里也不例外。为了应对0的情况，保存sums[i] % k的结果的同时，还要保存i的位置。如果为0的情况下，逻辑就转变为，0的值是否出现过。初始值的时候将map种设置`map.Add(0, -1);`。将0的位置i设定为-1， 未出现过。第一次遇到0的时候将它设置为i，表示已经出现过。再次遇到0的时候，就可以返回true.
 
 ## 代码 - Dictionary
 
