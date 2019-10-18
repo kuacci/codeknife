@@ -84,6 +84,9 @@ for(int i = 1; i < nums.Length; i++)
 
 这里以start = 1, end = 4 为例。 如果第一种方式，sum 1 ~ 4 的值应该是 `sum = nums[1] + nums[2] + nums[3] + nums[4]`. 观察图形， sums[4]上面已经加盖了nums[0] ~ nums[4], 因为求和是从nums[0]开始的。同样，sums[1]上面的是nums[0] ~ nums[1]，所以sums[4] - sums[1] 能把上面的去掉，这样还缺一个nums[1]. 把nums[1]重新加上去就完成了。
 
+时间复杂度 ： O(N^2)
+空间复杂度 ： O(N)
+
 ## 代码 - 暴力算法 - 优化
 
 ```csharp
@@ -104,5 +107,51 @@ public class Solution {
         }
         return false;
     }
+}
+```
+
+## 思路 - Dictionary
+
+目前这个算法还没完全看懂，存疑。
+
+这里利用的是反证法。假设某段范围之间的sums能够符合要求，那么他的`sums % K == 0`，只要就不需要关心它的sums实际是多少，只要关心它到当前位置的(sum % K)是多少，如果后面的(sum % K)与前面形成了互补，即 `((sum1 % K) + (sum2 % K)) % K == 0`， 那么久返回true.
+
+为了降低第二层循环的时间，可以使用Dictionary,来保存到第 i 个元素为止的累积和，因为使用Dictionary的时间复杂度为O(1). 相当于用O(N)的空间复杂度置换了O(N)的空间复杂度。们对这个前缀和除以 k 取余数。原因如下：
+
+外面遍历一遍给定的数组，记录到当前为止的sum. 一旦外面找到新的sum的值（即在Dictionary中没有这个值），加入到Dictionary中。
+
+现在，假设第i个位置的sum的值为rem。如果以i为左端点的任何子数组的和是k的倍数，比如说这个位置是j, 那么Dictionary中第j个元素保存的值为`(rem + n*k) % k`, 其中n > 0. 我们会发现 `(rem+n*k)%k = rem`跟之前保存到Dictionary中的第i个元素的值是相同的。
+基于这一点观察，我们得出结论，当sum的值已经 被放入到Dictionary中，并且代表着i和j， 他们之间的元素之和是k的整数倍。所以只要存在Dictionary中存在着相同的sum%k, 就可以返回true.
+
+下面是nums: [2, 5, 33, 6, 7, 25, 15] k=13的求解过程。
+
+![img](image/figure3.jpg)
+![img](image/figure4.jpg)
+![img](image/figure5.jpg)
+![img](image/figure6.jpg)
+![img](image/figure7.jpg)
+
+## 代码 - Dictionary
+
+```csharp
+public bool CheckSubarraySum(int[] nums, int k)
+{
+    int sum = 0;
+    Dictionary<int, int> map = new Dictionary<int, int>();
+    map.Add(0, -1);
+    for (int i = 0; i < nums.Length; i++)
+    {
+        sum += nums[i];
+        if (k != 0)
+            sum = sum % k;
+        if (map.ContainsKey(sum))
+        {
+            if (i - map[sum] > 1)
+                return true;
+        }
+        else
+            map.Add(sum, i);
+    }
+    return false;
 }
 ```
