@@ -47,6 +47,14 @@ Given a non-empty string containing only digits, determine the total number of w
 * 若 s[i-1] = '1', dp[i] = dp[i-1] + dp[i-2].
 * 若 s[i-1] = '2' && `s[i] <= 6`, dp[i] = dp[i-1] + dp[i-2].
 
+因为dp[i]与dp[i - 1]和dp[i - 2]有关，所以实际上用两个变量pre & cur代替dp[]。
+
+图解 ：
+![img](image/figure.jpg)
+
+算法复杂度 O(N)
+空间复杂度 O(1)
+
 ## 代码 - dp - [压缩空间]
 
 ```csharp
