@@ -64,3 +64,45 @@ public bool CheckSubarraySum(int[] nums, int k)
     return false;
 }
 ```
+
+## 思路 - 暴力算法 - 优化
+
+上面的思路是O(N^3) ，内循环可以进行优化。内循环的作用是在滑动窗口内计算sum。可以用一个int[] sums来保存sum的结果。这样可以省略掉最里面的内循环。
+可以先用一次循环计算`nums[0]` 到`nums[i]`的和。
+
+```csharp
+for(int i = 1; i < nums.Length; i++)
+    sums[i] = sums[i - 1] + nums[i];
+```
+
+计算的结果如下图所示 :
+![img](image/figure1.jpg)
+
+那么如何计算内循环的sum呢。start 到 end之间的`sum = sums[end] - sums[start] + nums[start]`.
+
+![img](image/figure2.jpg)
+
+这里以start = 1, end = 4 为例。 如果第一种方式，sum 1 ~ 4 的值应该是 `sum = nums[1] + nums[2] + nums[3] + nums[4]`. 观察图形， sums[4]上面已经加盖了nums[0] ~ nums[4], 因为求和是从nums[0]开始的。同样，sums[1]上面的是nums[0] ~ nums[1]，所以sums[4] - sums[1] 能把上面的去掉，这样还缺一个nums[1]. 把nums[1]重新加上去就完成了。
+
+## 代码 - 暴力算法 - 优化
+
+```csharp
+public class Solution {
+    public bool CheckSubarraySum(int[] nums, int k) {
+        int[] sums = new int[nums.Length];
+        sums[0] = nums[0];
+        for(int i = 1; i < nums.Length; i++)
+            sums[i] = sums[i - 1] + nums[i];
+
+        for(int start = 0; start <= nums.Length - 2; start++)
+        {
+            for(int end = start + 1; end <= nums.Length - 1; end++)
+            {
+                int sum = sums[end] - sums[start] + nums[start];
+                if(sum == k || (k != 0 && sum % k == 0)) return true;
+            }
+        }
+        return false;
+    }
+}
+```
