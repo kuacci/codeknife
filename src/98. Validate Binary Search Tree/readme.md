@@ -47,6 +47,9 @@ Explanation: The root node's value is 5 but its right child's value is 4.
 
 首先走到最左侧，拿到最小值，然后走右侧，比较左右两边的大小，检查是否有序。将整个子树的最小值和最大值向上返回。每一层都要比较`node.val > Max(node.left.val)`, `node.val < Min(node.right.val)`, `Max(node.left.val) < Min(node.right.val)` 是否成立。
 
+时间复杂度 ：O(N) 遍历整棵树
+空间复杂度 ：O(N), 没有使用额外的变量，但是使用递归是借助了线程的stack, 所有为O(N)
+
 ## 代码 - 比较边界值
 
 ```csharp
@@ -102,6 +105,62 @@ public class Solution {
         max = rMax;
 
         return true;
+    }
+}
+```
+
+## 思路 - 中序遍历 + 有序数组
+
+BST 本身就是有序，我们可以通过中序遍历将他的值转化成为一个有序的数组。例如下面的树，经过中序遍历生成的数组是一个有序数组。反之，如果中序遍历生成的数组不是有序的，那么BST不成立。
+
+```text
+    5
+   / \
+  1   4
+     / \
+    3   6
+
+[1,5,3,4,6]
+```
+
+时间复杂度: O(2N) = O(N) , 遍历一棵树O(N), 再遍历一次`List<int>`为O(N)
+空间复杂度：O(2N) = O(N), 记录所有值的`List<int>`, 递归使用了线程的stack
+
+## 代码 - 中序遍历 + 有序数组
+
+```csharp
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     public int val;
+ *     public TreeNode left;
+ *     public TreeNode right;
+ *     public TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public bool IsValidBST(TreeNode root)
+    {
+        List<int> ans = new List<int>();
+        helper(ans, root);
+
+        for(int i = 1; i < ans.Count; i++)
+        {
+            if(ans[i - 1] >= ans[i]) return false;
+        }
+        return true;
+    }
+
+    private void helper(List<int> ans, TreeNode root)
+    {
+        if(root == null) return;
+        if(root.left != null)
+            helper(ans, root.left);
+
+        ans.Add(root.val);
+
+        if(root.right != null)
+            helper(ans,root.right);
     }
 }
 ```
