@@ -59,7 +59,7 @@ Here are the rules of Tic-Tac-Toe:
 4. 如果PlayerA赢了棋子数 A = B + 1;
 5. 如果PlayerB赢了棋子数 A = B;
 
-## 代码 - 穷举法
+## 代码 - 3X3矩阵
 
 ```csharp
 public class Solution {
@@ -107,6 +107,66 @@ public class Solution {
             return (chs[0][2] == c && chs[1][2] == c) || (chs[2][0] == c && chs[2][1] == c);
         }
         return false;
+    }
+}
+```
+
+## 思路 - bool数组
+
+思路跟上面类似，但是用`bool[]`来代替`char[][]`. bool从1开始，放置棋子的地方为true,否则为false. 胜利情况下棋子的布局为下面几种 :
+
+```text
+pos[1] && pos[2] && pos[3]
+pos[1] && pos[4] && pos[7]
+pos[1] && pos[5] && pos[9]
+pos[3] && pos[5] && pos[7]
+pos[3] && pos[6] && pos[9]
+pos[4] && pos[5] && pos[6]
+pos[7] && pos[8] && pos[9]
+```
+
+## 代码 - bool数组
+
+```csharp
+public class Solution {
+    public bool ValidTicTacToe(string[] board)
+    {
+        bool[] xpos = new bool[10];
+        bool[] ypos = new bool[10];
+        int xcount = 0;
+        int ycount = 0;
+
+        for (int i = 0; i < board.Length; i++)
+        {
+            for(int j = 0; j < 3; j++)
+            {
+                int z = 3 * i  + (j + 1);
+                xpos[z] = board[i][j] == 'X';
+                if (xpos[z]) xcount += 1;
+                ypos[z] = board[i][j] == 'O';
+                if (ypos[z]) ycount += 1;
+            }
+        }
+
+        bool awin = IsWin(xpos);
+        bool bwin = IsWin(ypos);
+
+        if (awin && bwin) return false;
+        else if (awin && xcount <= ycount) return false;
+        else if (bwin && ycount != xcount) return false;
+        else if (xcount < ycount || xcount > ycount + 1) return false;
+
+        return true;
+    }
+    private bool IsWin(bool[] pos)
+    {
+        return ((pos[1] && pos[2] && pos[3])
+            || (pos[1] && pos[4] && pos[7])
+            || (pos[1] && pos[5] && pos[9])
+            || (pos[3] && pos[5] && pos[7])
+            || (pos[3] && pos[6] && pos[9])
+            || (pos[4] && pos[5] && pos[6])
+            || (pos[7] && pos[8] && pos[9]));
     }
 }
 ```
