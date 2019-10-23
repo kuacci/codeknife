@@ -1,4 +1,4 @@
-# [50. Pow(x, n)](https://leetcode-cn.com/problems/powx-n/)
+# [Medium][50. Pow(x, n)](https://leetcode-cn.com/problems/powx-n/)
 
 Implement pow(x, n), which calculates x raised to the power n (xn).
 

@@ -1,4 +1,4 @@
-# [402. Remove K Digits](https://leetcode.com/problems/remove-k-digits/)
+# [Medium][402. Remove K Digits](https://leetcode.com/problems/remove-k-digits/)
 
 Given a non-negative integer num represented as a string, remove k digits from the number so that the new number is the smallest possible.
 

@@ -1,4 +1,4 @@
-# [1019. Next Greater Node In Linked List](https://leetcode.com/problems/next-greater-node-in-linked-list/)
+# [Medium][1019. Next Greater Node In Linked List](https://leetcode.com/problems/next-greater-node-in-linked-list/)
 
 We are given a linked list with head as the first node.  Let's number the nodes in the list: node_1, node_2, node_3, ... etc.
 

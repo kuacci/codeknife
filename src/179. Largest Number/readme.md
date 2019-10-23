@@ -23,3 +23,117 @@ Note: The result may be very large, so you need to return a string instead of an
 
 ## 代码 - 桶排序
 
+```csharp
+public class Solution {
+    public string LargestNumber(int[] nums)
+    {
+        List<string>[] ans = new List<string>[10];
+        for (int i = 0; i < 10; i++)
+            ans[i] = new List<string>();
+
+        for (int i = 0; i < nums.Length; i++)
+        {
+            AddToStringList(ans, nums[i].ToString());
+        }
+
+        StringBuilder res = new StringBuilder();
+
+        for (int i = 9; i >= 1; i--)
+        {
+            List<string> r = ans[i];
+            for (int j = 0; j < r.Count; j++)
+                res.Append(r[j]);
+        }
+        if (res.Length == 0)
+        {
+            if (ans[0].Count == 0) return "";
+            else return "0";
+        }
+        else
+        {
+            for (int j = 0; j < ans[0].Count; j++)
+                res.Append(ans[0][j]);
+        }
+        return res.ToString();
+    }
+
+    private void AddToStringList(List<string>[] ans, string num)
+    {
+        char[] chs = num.ToCharArray();
+        int index = chs[0] - '0';
+
+        List<string> list = ans[index];
+        index = list.Count;
+        for (int i = 0; i < list.Count; i++)
+        {
+            if (Compare(num, list[i]) >= 0)
+            {
+                index = i;
+                break;
+            }
+        }
+        list.Insert(index, num);
+    }
+
+    private int Compare(string x, string y)
+    {
+        string order1 = x + y;
+        string order2 = y + x;
+
+        for (int i = 0; i  < order1.Length; i++)
+        {
+            if (order1[i] == order2[i]) continue;
+            else if (order1[i] > order2[i]) return 1;
+            else return -1;
+        }
+        return 0;
+    }
+}
+```
+
+## 思路 - Array.Sort
+
+还有一种方式可以借助Array.Sort提供的排序方式来进行排序。这里只要实现自己的`IComparer<string>` 类型就可以。
+
+## 代码 - Array.Sort
+
+```csharp
+public class Solution {
+    public string LargestNumber(int[] nums)
+    {
+        string[] strs = new string[nums.Length];
+
+        for (int i = 0; i < nums.Length; i++)
+        {
+            strs[i] = nums[i].ToString();
+        }
+
+        Array.Sort(strs, new LargerNumberComparator());
+
+        if (strs[0] == "0") return "0";
+        StringBuilder ans = new StringBuilder();
+        for (int i = 0; i < strs.Length; i++)
+        {
+            ans.Append(strs[i]);
+        }
+
+        return ans.ToString();
+    }
+    private class LargerNumberComparator : IComparer<string>
+    {
+        public int Compare(string x, string y)
+        {
+            string order1 = x + y;
+            string order2 = y + x;
+
+            for (int i = 0; i < order1.Length; i++)
+            {
+                if (order1[i] == order2[i]) continue;
+                else if (order1[i] > order2[i]) return -1;
+                else return 1;
+            }
+            return 0;
+        }
+    }
+}
+```

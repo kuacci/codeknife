@@ -1,4 +1,4 @@
-# [894. All Possible Full Binary Trees](https://leetcode.com/problems/all-possible-full-binary-trees/)
+# [Medium][894. All Possible Full Binary Trees](https://leetcode.com/problems/all-possible-full-binary-trees/)
 
 A full binary tree is a binary tree where each node has exactly 0 or 2 children.
 

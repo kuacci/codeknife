@@ -1,4 +1,4 @@
-# [1011. Capacity To Ship Packages Within D Days](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/)
+# [Medium][1011. Capacity To Ship Packages Within D Days](https://leetcode.com/problems/capacity-to-ship-packages-within-d-days/)
 
 A conveyor belt has packages that must be shipped from one port to another within D days.
 

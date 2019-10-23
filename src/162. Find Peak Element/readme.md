@@ -1,4 +1,4 @@
-# [162. Find Peak Element](https://leetcode.com/problems/find-peak-element/)
+# [Medium][162. Find Peak Element](https://leetcode.com/problems/find-peak-element/)
 
 A peak element is an element that is greater than its neighbors.
 
