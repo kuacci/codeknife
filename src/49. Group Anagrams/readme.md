@@ -1,4 +1,4 @@
-# [49. Group Anagrams](https://leetcode.com/problems/group-anagrams/)
+# [Medium][49. Group Anagrams](https://leetcode.com/problems/group-anagrams/)
 
 Given an array of strings, group anagrams together.
 

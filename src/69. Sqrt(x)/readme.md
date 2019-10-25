@@ -1,4 +1,4 @@
-# [69. Sqrt(x)](https://leetcode.com/problems/sqrtx/)
+# [Easy][69. Sqrt(x)](https://leetcode.com/problems/sqrtx/)
 
 Implement int sqrt(int x).
 
@@ -82,17 +82,12 @@ public class Solution {
             if (p == x) return (int)mid;
 
             if (p > x)
-            {
                 right = mid;
-            }
             else
-            {
                 left = mid;
-            }
         }
 
         return (int)left;
     }
 }
 ```
-

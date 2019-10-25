@@ -1,4 +1,4 @@
-# [1029. Two City Scheduling](https://leetcode.com/problems/two-city-scheduling/)
+# [Easy][1029. Two City Scheduling](https://leetcode.com/problems/two-city-scheduling/)
 
 There are 2N people a company is planning to interview. The cost of flying the i-th person to city A is costs[i][0], and the cost of flying the i-th person to city B is costs[i][1].
 

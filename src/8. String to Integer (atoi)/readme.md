@@ -1,4 +1,4 @@
-# [8. String to Integer (atoi)](https://leetcode.com/problems/string-to-integer-atoi/)
+# [Medium][8. String to Integer (atoi)](https://leetcode.com/problems/string-to-integer-atoi/)
 
 Implement `atoi` which converts a string to an integer.
 
@@ -134,6 +134,55 @@ public class Solution
         else
         {
             if (ans > int.MaxValue) ans = int.MaxValue;
+        }
+
+        return (int)ans;
+    }
+}
+```
+
+## 思路 - 优化 1
+
+上面的思路是用`Char.IsNumber(ch[i])`来验证是否为数字。另外一种思路是借助char的特性，char [0 - 9]保存的是这些字符的ASCII码。用`ch[i] - '0'`的方式可以直接计算出他对应的int。为了判断ch[i]是否是数字，可以判断它的范围是否 `ch[i] >= '0' && ch[i] <= '9'`
+
+## 代码 - 优化 1
+
+```csharp
+public class Solution {
+    public int MyAtoi(string str) {
+        str = str.Trim();
+        if(string.IsNullOrEmpty(str)) return 0;
+
+        bool sign = false;
+        double ans = 0;
+        int pos = 0;
+
+        if(str[0] == '-')
+        {
+            sign = true;
+            pos += 1;
+        }
+        else if(str[0] == '+')
+        {
+            pos += 1;
+        }
+
+        for(; pos < str.Length && str[pos] >= '0' && str[pos] <= '9'; pos++ )
+        {
+            ans = ans * 10 + (str[pos] - '0');
+            if(ans > int.MaxValue) break;
+        }
+
+        if(sign)
+        {
+            ans = -ans;
+            if(ans <= int.MinValue)
+                ans = int.MinValue;
+        }
+        else
+        {
+            if(ans >= int.MaxValue)
+                ans = int.MaxValue;
         }
 
         return (int)ans;

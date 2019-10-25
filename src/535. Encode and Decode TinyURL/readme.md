@@ -1,4 +1,4 @@
-# [535. Encode and Decode TinyURL](https://leetcode.com/problems/encode-and-decode-tinyurl/)
+# [Medium][535. Encode and Decode TinyURL](https://leetcode.com/problems/encode-and-decode-tinyurl/)
 
 > Note: This is a companion problem to the System Design problem: Design TinyURL.
 

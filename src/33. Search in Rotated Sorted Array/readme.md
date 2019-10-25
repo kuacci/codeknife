@@ -1,4 +1,4 @@
-# [33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/)
+# [Medium][33. Search in Rotated Sorted Array](https://leetcode.com/problems/search-in-rotated-sorted-array/)
 
 Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.
 

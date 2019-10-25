@@ -1,4 +1,4 @@
-# [56. Merge Intervals](https://leetcode.com/problems/merge-intervals/)
+# [Medium][56. Merge Intervals](https://leetcode.com/problems/merge-intervals/)
 
 Given a collection of intervals, merge all overlapping intervals.
 
