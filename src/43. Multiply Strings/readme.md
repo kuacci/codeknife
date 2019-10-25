@@ -31,6 +31,9 @@ Given two non-negative integers num1 and num2 represented as strings, return the
 
 最后的结果，有可能存在前导0，所有在生成返回值之前要处理掉前导0.
 
+时间复杂度： O(N^2), 外循环要遍历一遍num1, 内循环要逐位对num1做乘法。第一遍计算出来的结果后将结果集保存到了Dictionary。不过做相加的时候还是要做一次结果集的遍历。所有省掉了乘法的时间，但是没法减少加法的时间。
+空间复杂度： O(N), 使用了Dictionary保存num1 * 1 ~ 9的结果集。
+
 ## 代码 - 乘法竖式
 
 ```csharp
@@ -98,4 +101,46 @@ public class Solution {
     }
 
 }
+```
+
+## 思路 - 乘法竖式 - 优化
+
+上面的代码逻辑中有一部分是针对Dictonary的存取。使用Dictionary之后在时间复杂度方面没有质的提升。所有可以考虑去掉这个部分的代码，从而使得代码量得到简化。
+计算的方式同样是做竖式计算，逐位的计算，计算出来的数字直接覆盖在ans[]上面用于返回。当前位置为i + j + 1, 进位的数字保存至i + j上面。
+最低位取当前位置的值，加上计算出来的乘积，再对10取模。
+计算sum要取当前位置的值，因为当前位置的值保留上一次计算的进位后的值。
+
+核心代码 ：
+
+```csharp
+int tmp = (num1[i] - '0') * (num2[j] - '0');
+int sum = tmp + ans[i + j + 1];
+ans[i + j + 1] = sum % 10;
+ans[i + j] += sum / 10;
+```
+
+时间复杂度 ：O(N^2)
+空间复杂度 : O(N)
+
+## 代码 - 乘法竖式 - 优化
+
+```csharp
+        public string Multiply(string num1, string num2)
+        {
+            if (num1 == "0" || num2 == "0") return "0";
+            int[] ans = new int[num1.Length + num2.Length];
+
+            for (int i = num1.Length - 1; i >= 0; i--)
+            {
+                for (int j = num2.Length - 1; j >= 0; j--)
+                {
+                    int tmp = (num1[i] - '0') * (num2[j] - '0');
+                    int sum = tmp + ans[i + j + 1];
+                    ans[i + j + 1] = sum % 10;
+                    ans[i + j] += sum / 10;
+                }
+            }
+
+            return string.Join("", ans).TrimStart('0');
+        }
 ```
