@@ -79,6 +79,8 @@ Explanation: The original source string is "a/*comment\nline\nmore_comment*/b", 
 * `//` 行注释， 去除后面的所有内容
 * `/* */` 块注释， 去除块内的注释
 
+_**注意**_ ：如果是空行，则不输出。如果有空格的存在，要保留空格并且输出
+
 这里面 `//`比较容易处理，如果先出现行注释，则后面的都内容都去掉。
 
 `/* */` 块注释就比较复杂 ：
@@ -144,5 +146,53 @@ public class Solution {
 
         return ans;
     }
+}
+```
+
+## 思路 - 状态机 - 优化
+
+对代码进行优化，逻辑不变。将内循环修改为对字符的逐个处理。如果遇到注释，则忽略调字符，最后将字符整串输出。
+
+## 代码 - 状态机 - 优化
+
+```csharp
+public IList<string> RemoveComments(string[] source)
+{
+    List<string> res = new List<string>();
+    StringBuilder sb = new StringBuilder();
+    bool mode = false;
+    foreach (String s in source)
+    {
+        for (int i = 0; i < s.Length; i++)
+        {
+            if (mode)
+            {
+                if (s[i] == '*' && i < s.Length - 1 && s[i + 1] == '/')
+                {
+                    mode = false;
+                    i++;        //skip '/' on next iteration of i
+                }
+            }
+            else
+            {
+                if (s[i] == '/' && i < s.Length - 1 && s[i + 1] == '/')
+                {
+                    break;      //ignore remaining characters on line s
+                }
+                else if (s[i] == '/' && i < s.Length - 1 && s[i + 1] == '*')
+                {
+                    mode = true;
+                    i++;           //skip '*' on next iteration of i
+                }
+                else sb.Append(s[i]);     //not a comment
+            }
+        }
+        if (!mode && sb.Length > 0)
+        {
+            res.Add(sb.ToString());
+            sb = new StringBuilder();   //reset for next line of source code
+        }
+    }
+    return res;
 }
 ```
