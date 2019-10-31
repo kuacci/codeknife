@@ -104,7 +104,7 @@ public class Solution
 
 ![img](image\figure1.jpg)
 
-当 numRows=2时，上下两列输出的`char[]`位置非常有规律，交替出现。通过观察numRow=2 和 numRow=3的情况，第一列和最后一列的`char[]`位置是有规律的。但是中间的列的规律还不是特别明亮。
+当 numRows=2时，上下两列输出的`char[]`位置非常有规律，交替出现。通过观察numRow=2 和 numRow=3的情况，第一列和最后一列的`char[]`位置是有规律的。但是中间的列的规律还不是特别明显。
 
 ![img](image\figure2.jpg)
 ![img](image\figure3.jpg)
