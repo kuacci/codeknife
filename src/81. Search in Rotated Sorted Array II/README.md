@@ -145,7 +145,17 @@ public class Solution {
 }
 ```
 
-# 代码 - 寻找翻转点
+所谓的翻转点有这样的特征 `nums[low] > nums[high]`. 只要找到low的位置即可。
+
+```csharp
+if (high - low == 1)
+{
+    return nums[low] > nums[high] ? low : -1;
+}
+```
+
+
+## 代码 - 寻找翻转点
 
 ```csharp
 public class Solution {
