@@ -125,22 +125,22 @@ ans[i + j] += sum / 10;
 ## 代码 - 乘法竖式 - 优化
 
 ```csharp
-        public string Multiply(string num1, string num2)
+public string Multiply(string num1, string num2)
+{
+    if (num1 == "0" || num2 == "0") return "0";
+    int[] ans = new int[num1.Length + num2.Length];
+
+    for (int i = num1.Length - 1; i >= 0; i--)
+    {
+        for (int j = num2.Length - 1; j >= 0; j--)
         {
-            if (num1 == "0" || num2 == "0") return "0";
-            int[] ans = new int[num1.Length + num2.Length];
-
-            for (int i = num1.Length - 1; i >= 0; i--)
-            {
-                for (int j = num2.Length - 1; j >= 0; j--)
-                {
-                    int tmp = (num1[i] - '0') * (num2[j] - '0');
-                    int sum = tmp + ans[i + j + 1];
-                    ans[i + j + 1] = sum % 10;
-                    ans[i + j] += sum / 10;
-                }
-            }
-
-            return string.Join("", ans).TrimStart('0');
+            int tmp = (num1[i] - '0') * (num2[j] - '0');
+            int sum = tmp + ans[i + j + 1];
+            ans[i + j + 1] = sum % 10;
+            ans[i + j] += sum / 10;
         }
+    }
+
+    return string.Join("", ans).TrimStart('0');
+}
 ```

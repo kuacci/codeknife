@@ -20,13 +20,13 @@ search(word) can search a literal word or a regular expression string containing
 **Note:**
 You may assume that all words are consist of lowercase letters a-z.
 
-## 思路 - Trie
+## 思路 - Trie + BFS
 
 这里的思路与[208. Implement Trie (Prefix Tree)](../208.%20Implement%20Trie%20(Prefix%20Tree))很相似。通过Trie字典树来做索引。
 
 如果是精确匹配，那么还是通过Trie自带的检索方式。那么问题在于模糊查询'.'的处理，当遇到检索的字符是'.'的时候，应该匹配所有的字符。这个时候需要用BFS的方式，借助Queue将所有的可能性都包涵进来，再匹配下一个字符。
 
-## 代码 - Trie
+## 代码 - Trie + BFS
 
 ```csharp
 public class WordDictionary
