@@ -24,46 +24,47 @@ Output:
 
 ![img](image/backtrace.jpg)
 
+[参考](https://leetcode-cn.com/problems/permutations/solution/quan-pai-lie-by-leetcode/)
+
+
+
+
 ## 代码 - 回溯法
 
 ```csharp
-public class Solution
-{
-    IList<IList<int>> ans = new List<IList<int>>();
+public class Solution {
+    public IList<IList<int>> Permute(int[] nums) {
 
-    public IList<IList<int>> Permute(int[] nums)
-    {
-        var lst = new List<int>();
-        lst.AddRange(nums);
-        ans.Add(lst);
-
-        backtrace(nums, 0);
+        IList<IList<int>> ans = new List<IList<int>>();
+        if(nums == null || nums.Length == 0) return ans;
+        PermuteHelper(ans, nums, 0);
         return ans;
     }
 
-    private void backtrace(int[] nums, int first)
+    private void PermuteHelper(IList<IList<int>> ans, int[] nums, int first)
     {
-        if (first >= nums.Length - 1) return;
-
-        for (int i = first; i < nums.Length; i++)
+        if(nums.Length == first)
         {
-            swap(nums, i, first);
-            if (i != first)
+            List<int> res = new List<int>();
+            res.AddRange(nums);
+            ans.Add(res);
+        }
+        else
+        {
+            for(int i = first; i < nums.Length; i++)
             {
-                var lst = new List<int>();
-                lst.AddRange(nums);
-                ans.Add(lst);
+                Swap(nums, first, i);
+                PermuteHelper(ans, nums, first + 1);
+                Swap(nums, first, i);
             }
-            backtrace(nums, first + 1);
-            swap(nums, i, first);
         }
     }
 
-    private void swap(int[] nums, int x, int y)
+    private void Swap(int[] nums, int x, int y)
     {
-        int t = nums[x];
+        int z = nums[x];
         nums[x] = nums[y];
-        nums[y] = t;
+        nums[y] = z;
     }
 }
 ```
