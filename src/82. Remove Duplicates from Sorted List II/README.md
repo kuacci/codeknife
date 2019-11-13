@@ -54,3 +54,51 @@ public class Solution {
     }
 }
 ```
+
+## 思路 - 虚拟头指针 + 双指针
+
+这里的思路是利用双指针来确认要删除的链表的范围，用一个`pre`指针来标记之前一个节点。由于可能一开始就删除了第一个节点，使得后面无法运算，需要使用一个虚拟头指针来指向head，并且引导后面的计算。最后返回的是start.next.
+
+双指针的思路是：
+
+1. cur记录左边的一个节点
+2. nxt记录右边的一个节点，即cur.next
+3. 如果nxt.val == cur.val，说明要删除至少2个节点。nxt继续向右走，一直走到val不等的时候。
+4. 用pre.val = nxt的方式，截断之前的相同val的节点。
+5. 用cur.next = pre, nxt = cur?.next. 的方式进行下一轮计算。
+6. 知道nxt走到尾。
+
+## 代码 - 虚拟头指针 + 双指针
+
+```csharp
+public ListNode DeleteDuplicates(ListNode head)
+{
+    if (head == null || head.next == null) return head;
+
+    ListNode start = new ListNode(-1);
+    start.next = head;
+
+    ListNode pre = start;
+    ListNode cur = head;
+    ListNode nxt = head.next;
+
+    while (nxt != null)
+    {
+        if(cur.val == nxt.val)
+        {
+            while (nxt != null && cur.val == nxt.val) nxt = nxt.next;
+            pre.next = nxt;
+            cur = pre.next;
+        }
+        else
+        {
+            pre = pre.next;
+            cur = pre.next;
+        }
+        nxt = cur == null ? null : cur.next;
+
+    }
+
+    return start.next;
+}
+```
