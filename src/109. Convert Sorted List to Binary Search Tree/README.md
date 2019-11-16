@@ -77,3 +77,40 @@ public class Solution {
     }
 }
 ```
+
+## 思路 - 数组 + 二分
+
+上面的方法有改进的空间。单项列表为了确认Mid的位置，需要重复的遍历各个节点。
+为了解决这个问题，可以先遍历单向链表，并且将结果保持在`int[]`中，然后再用二分法进行计算。
+
+## 代码 - 数组 + 二分
+
+```csharp
+public class Solution {
+
+    public TreeNode SortedListToBST(ListNode head) {
+        List<int> nums = new List<int>();
+        SortListToArray(nums, head);
+        return ArrayToBST(nums, 0, nums.Count - 1);
+    }
+
+    private void SortListToArray(List<int> nums, ListNode head)
+    {
+        if(head == null) return;
+        nums.Add(head.val);
+        SortListToArray(nums, head.next);
+    }
+
+    private TreeNode ArrayToBST(List<int> nums, int lo, int hi)
+    {
+        if(lo > hi) return null;
+        if(lo == hi) return new TreeNode(nums[lo]);
+
+        int mid = (lo + hi) / 2;
+        TreeNode root = new TreeNode(nums[mid]);
+        root.left = ArrayToBST(nums, lo, mid - 1);
+        root.right = ArrayToBST(nums, mid + 1, hi);
+        return root;
+    }
+}
+```
