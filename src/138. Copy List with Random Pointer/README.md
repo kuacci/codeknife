@@ -55,6 +55,9 @@ public Node CopyRandomList(Node head) {
 }
 ```
 
+时间复杂度：O(N), 按照head.next的方向，每个节点会被touch一次O(N)，加上random上的节点，存在个别节点被touch多次，而个别节点可能不会被touch的情况，但总和应该是N个。在Dictionary中查找节点的时间复杂度为O(1). 所有时间复杂度为： O(N+N) = O(N)。
+空间复杂度：O(N). 返回的newHead是从head上面复制出来的，空间复杂度为O(N)， head的空间复杂度也为O(N). Dictionary作为辅助，保存了整个head上的所有节点和newHead上新创建出来的节点的**引用**，而不是增加了新的节点。Dictionary虽然本身也需要空间来保存hashtable的数据，但是所用有限。所有空间复杂度为O(N + N) = O(N).
+
 ## 代码 - 递归
 
 ```csharp
