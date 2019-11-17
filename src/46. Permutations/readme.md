@@ -26,9 +26,6 @@ Output:
 
 [参考](https://leetcode-cn.com/problems/permutations/solution/quan-pai-lie-by-leetcode/)
 
-
-
-
 ## 代码 - 回溯法
 
 ```csharp

@@ -64,6 +64,9 @@ The given board size is always 9x9.
 
 扫描的时候，分别判断上述3个cache中是否已经出现过重复的数字，如果没有将继续。如果出现则返回false.
 
+时间复杂度：O(N), 一次遍历
+空间复杂度：O(N), 行、列、块的cache分别保存了一份copy，即O(N + N + N) = O(3N) = O(N).
+
 ## 代码 - 逐行扫描
 
 ```csharp
