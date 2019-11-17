@@ -27,6 +27,7 @@ Return the following binary tree:
 构造过程中要判断这个元素是否在inorder的节点中找到，如果没有的话就返回Null.
 
 ![img](image/image1.png)
+![img](image/image2.png)
 
 ## 代码 - 后序遍历[递归]
 
