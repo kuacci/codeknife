@@ -90,6 +90,43 @@ Therefore, sum = 495 + 491 + 40 = 1026.
 ## 代码 - 先序遍历
 
 ```csharp
+public class Solution {
+    private int R = 0;
+    private int C = 0;
+    public void Solve(char[][] board) {
+        if(board == null || board.Length == 0) return;
+        R = board.Length;
+        C = board[0].Length;
+        for(int i = 0; i < C; i++) // E
+        {
+            Connect(board, 0, i);
+            Connect(board, R - 1, i);
+        }
+        for(int i = 1; i < R - 1; i++) // S
+        {
+            Connect(board, i, 0);
+            Connect(board, i, C - 1);
+        }
 
+        for(int i = 0; i < R; i++)
+        {
+            for(int j = 0; j < C; j++)
+            {
+                board[i][j] = board[i][j] == 'S' ? 'O' : 'X';
+            }
+        }
+    }
+
+    private void Connect(char[][] board, int row, int col)
+    {
+        if(row >= 0 && row <R && col >= 0 && col < C && board[row][col] == 'O')
+        {
+            board[row][col] = 'S';
+            Connect(board, row, col + 1);  // E
+            Connect(board, row + 1, col);  // S
+            Connect(board, row, col - 1);  // W
+            Connect(board, row - 1, col);  // N
+        }
+    }
+}
 ```
-
