@@ -113,3 +113,36 @@ public class Solution {
     }
 }
 ```
+
+## 思路 - 差值计算 - 优化
+
+上面的算法能够到达一个效果，如果有多个加油站可以完成绕圈的任务，能够选择出来最靠近左侧的加油站。不过题设并没有这个要求。所有可以做的更加优化一些。
+能否完成绕圈还是又一个遍历做完之后，总的剩余的油是否 `>= 0`来确定。加油站的选取采用另外一种方式，用curTank记录从某一点i开始加油后行驶到当前这一点的剩余油量。如果`curTank <= 0` 说明从i开始行使无法开到当前的点`i'`. 这个时候不是从 `i + 1` 重新进行计算，而是从 `i' + 1` 作为新的起点，并且将curTank清空为0. 一直形式到最后一个加油站结束。
+
+## 代码 - 差值计算 - 优化
+
+```csharp
+public class Solution {
+    public int CanCompleteCircuit(int[] gas, int[] cost) {
+        if(gas.Length == 0) return -1;
+
+        int curTank = 0;
+        int totalGas = 0;
+        int pos = 0;
+
+        for(int i = 0; i < gas.Length; i++)
+        {
+            int d = gas[i] - cost[i];
+            curTank += d;
+            totalGas += 0;
+            if(curTank < 0)
+            {
+                curTank = 0;
+                pos = i + 1;
+            }
+        }
+
+        return totalGas >= 0 ? pos : -1;
+    }
+}
+```
