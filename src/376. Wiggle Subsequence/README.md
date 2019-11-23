@@ -68,14 +68,14 @@ public class Solution {
 
         if(d == 0)
             preState = State.Zero;
-        else if(d < 0) 
+        else if(d < 0)
             preState = State.Negitive;
 
         int ans = preState == State.Zero ? 1 : 2;
 
         for(int i = 2; i < nums.Length; i++)
         {
-            d = nums[i] - nums[i - 1]; 
+            d = nums[i] - nums[i - 1];
             if(d == 0) continue;
             var curState = d > 0 ? State.Positive : State.Negitive;
 
