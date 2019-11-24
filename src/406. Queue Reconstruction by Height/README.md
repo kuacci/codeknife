@@ -45,3 +45,23 @@ public class Solution {
     }
 }
 ```
+
+## 思路 - 模拟三进制
+
+参考 ： [Single Number II（模拟三进制法，图表解析）](https://leetcode-cn.com/problems/single-number-ii/solution/single-number-ii-mo-ni-san-jin-zhi-fa-by-jin407891/)
+
+## 代码 - 模拟三进制
+
+```csharp
+public class Solution {
+    public int SingleNumber(int[] nums) {
+        int ones = 0, twos = 0;
+        for(int i = 0; i < nums.Length; i++)
+        {
+            ones = ones ^ nums[i] & ~twos;
+            twos = twos ^ nums[i] & ~ones;
+        }
+        return ones;
+    }
+}
+```
