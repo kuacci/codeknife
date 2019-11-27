@@ -42,11 +42,15 @@ A straight forward solution using O(mn) space is probably a bad idea.
 A simple improvement uses O(m + n) space, but still not the best solution.
 Could you devise a constant space solution?
 
-## 思路 - O(m+n)
+## 思路 - 空间复杂度 O(m+n)
 
-当矩阵中一个元素为0的时候，该元素同行列都被置为0. 所以使用2个辅助数组，一个数组记录被置0的行号，另一个数组记录被置0的列号。空间复杂度为 O (m+n).
+当矩阵中一个元素为0的时候，该元素同行列都被置为0. 这里要解决的一个问题是当置0的时候，可能会把原生的0覆盖掉。以至于在后面访问到0的时候，无法判断是原生的0，还是被翻转的0.为了解决这个问题，需要记录下来原生的0的情况。
+所以使用2个辅助数组，在遍历第一遍矩阵的时候，用一个数组记录被置0的行号，另一个数组记录被置0的列号。再次遍历矩阵，如果行或者列比MARK过，则置零。
 
-## 代码 - O(m+n)
+时间复杂度：O(m * n). 遍历矩阵以求解哪些行列需要置零O(m * n), 再次遍历数组置零。O(2 * m * n).
+空间复杂度为 O (m+n).
+
+## 代码 - 空间复杂度 O(m+n)
 
 ```csharp
 public class Solution {
