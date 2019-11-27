@@ -159,3 +159,33 @@ public class Solution {
     }
 }
 ```
+
+## 代码 - 中心扩展 2
+
+```csharp
+public class Solution {
+    public string LongestPalindrome(string s) {
+        if(string.IsNullOrEmpty(s)) return String.Empty;
+        int ansl = 0;
+        int ansr = 0;
+        for(int i = 0; i < s.Length; i++)
+        {
+            int left = i, right = i;
+            while(left > 0 && s[left -1] == s[i]) left--;
+            while(right < s.Length - 1 && s[right + 1] == s[i]) right++;
+
+            while(left >= 0 && right < s.Length && s[left] == s[right])
+            {
+                if(right - left > ansr - ansl)
+                {
+                    ansl = left;
+                    ansr = right;
+                }
+                left--;
+                right++;
+            }
+        }
+        return s.Substring(ansl, ansr - ansl + 1);
+    }
+}
+```

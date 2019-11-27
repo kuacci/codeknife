@@ -31,6 +31,9 @@ Explanation: The answer is "wke", with the length of 3.
 
 这个是效率比较差的方法，从左边开始扫描数组，将已经扫描过的char放到一个List中，往右移动的时候检查是否已经被记录过。如果没有则继续。如果已经过，截断子串，左边的指针往右移动一个。
 
+时间复杂度：O(N^2)
+空间复杂度：O(N)
+
 ## 代码 - Brute Force
 
 ```csharp
