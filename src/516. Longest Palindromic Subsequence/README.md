@@ -92,3 +92,95 @@ public class Solution {
     }
 }
 ```
+
+## 思路 - dp - 优化空间复杂度O(N)
+
+从上面的计算可以得出一个规律，能用到的数组只有3列。
+
+1. 当前长度`Len = l`，正在运算并且赋值的一列,相当于`dp[left][right]`。
+2. 比当前长度少1的一列，`Len = l - 1`。这个是在左右两个不等的情况下，取左边进一格以及右边退一格的两种情况的最大值。即：`dp[left][right] = Math.Max(dp[left][right - 1], dp[left + 1][right]);`
+3. 比当前长度少2的一列，`Len = 1 -2`。这个是在左右两边相等的情况下，左右向中间逼近一格的子序列，然后加上两边的长度。即：`dp[left][right] = dp[left + 1][right - 1] + 2;`
+
+为了降维，定义3个数组：
+
+``` csharp
+// replace
+// int[][] dp = new int[N][];
+
+int[] dp0 = new int[N]; // Len = l
+int[] dp1 = new int[N]; // Len = l - 1
+int[] dp2 = new int[N]; // Len = l - 2
+```
+
+计算的过程被替换为下面的代码。因为right是由left计算得来的，`int right = Len + left - 1;`，这里可以使用left来表示rigth. 所有在替换的过程中不需要给right增加下标了。
+
+```csharp
+if(s[left] == s[right])
+{
+    dp0[left] = dp2[left + 1] + 2;
+}
+else
+{
+    dp0[left] = Math.Max(dp1[left], dp1[left + 1]);
+}
+//if(s[left] == s[right])
+//{
+//    dp[left][right] = dp[left + 1][right - 1] + 2;
+//}
+//else
+//{
+//    dp[left][right] = Math.Max(dp[left][right - 1], dp[left + 1][right]);
+//}
+
+```
+
+完成一轮计算之后，要将结果进行交互。当前计算的dp0，在完成这一轮循环后，将变成dp1,因为他以及不再是当前一行了，而是`Len = l - 1`. 同理，现在的dp1，下一轮要交换到`dp2`. `dp0`将会重新初始化。不过考虑到下一轮的计算会把`dp0`重新计算一次，`dp0`这个时候怎么赋值都可以。
+
+```csharp
+int[] tmp = dp2;
+dp2 = dp1;
+dp1 = dp0;
+dp0 = tmp;
+```
+
+## 代码 - dp - 优化空间复杂度O(N)
+
+```csharp
+public class Solution {
+    public int LongestPalindromeSubseq(string s) {
+        if(s.Length == 0) return 0;
+        int N = s.Length;
+        int[] dp0 = new int[N];
+        int[] dp1 = new int[N];
+        int[] dp2 = new int[N];
+
+        for(int Len = 1; Len <= N; Len++)
+        {
+            for(int left = 0; left <= N - Len; left ++)
+            {
+                int right = Len + left - 1;
+                if(left == right) 
+                {
+                    dp0[left] = 1;
+                    continue;
+                }
+
+                if(s[left] == s[right])
+                {
+                    dp0[left] = dp2[left + 1] + 2;
+                }
+                else
+                {
+                    dp0[left] = Math.Max(dp1[left], dp1[left + 1]);
+                }
+            }
+            int[] tmp = dp2;
+            dp2 = dp1;
+            dp1 = dp0;
+            dp0 = tmp;
+        }
+
+        return dp1[0];
+    }
+}
+```
