@@ -8,9 +8,8 @@ Given a string s, find the longest palindromic subsequence's length in s. You ma
 > Output:
 > 4
 > One possible longest palindromic subsequence is "bbbb".
-you
-**Example 2:**
 
+**Example 2:**
 > Input:
 > "cbbd"
 > Output:
@@ -37,6 +36,9 @@ you
 1. 需要用一个`dp[][] table`记录曾经遍历过的字符串的回文的长度。用`left`来表示子序列的左下标，用`right`来表示子序列的右下标.`dp[left][right]`记录的是left到right之间的回文的长度。
 2. 初始值为l`eft = right`， 即子序列为单个字符的情况,回文长度为1.`dp[left][right] = 1;// (left == right)`.
 3. 两个以上的字符的公式为：
+
+时间复杂度：O(N^2)，循环两层嵌套。
+空间复杂度：O(N^2),用dp table记录了每次运算的结果。
 
 ```csharp
 if(s[left] == s[right])
@@ -69,7 +71,7 @@ public class Solution {
             for(int left = 0; left <= N - Len; left ++)
             {
                 int right = Len + left - 1;
-                if(left == right) 
+                if(left == right)
                 {
                     dp[left][right] = 1;
                     continue;
