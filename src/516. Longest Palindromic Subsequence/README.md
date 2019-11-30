@@ -159,7 +159,7 @@ public class Solution {
             for(int left = 0; left <= N - Len; left ++)
             {
                 int right = Len + left - 1;
-                if(left == right) 
+                if(left == right)
                 {
                     dp0[left] = 1;
                     continue;
