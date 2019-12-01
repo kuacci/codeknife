@@ -50,6 +50,8 @@ public class Solution {
 
 参考 ： [Single Number II（模拟三进制法，图表解析）](https://leetcode-cn.com/problems/single-number-ii/solution/single-number-ii-mo-ni-san-jin-zhi-fa-by-jin407891/)
 
+题目要求O(N)的时间复杂度和O(1)的空间复杂度。这种要求下套两个循环或者采用计数排序的
+
 ## 代码 - 模拟三进制
 
 ```csharp
