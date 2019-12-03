@@ -66,3 +66,32 @@ public class Solution {
     }
 }
 ```
+
+## 思路 - backtrack - 2
+
+上面的思路创建了太多的string, 对于空间复杂度的要求比较高。可以用双指针的方式，传入的pos作为起始的指针，然后计算偏移量i，如果pos和i之间的word存在于dictionary中，则进行递归。
+
+## 代码 - backtrack - 2
+
+```csharp
+public class Solution {
+    public bool WordBreak(string s, IList<string> wordDict)
+    {
+        return WordBreakBackTrack(s, wordDict, 0);
+    }
+
+    private bool WordBreakBackTrack(string s, IList<string> wordDict, int pos)
+    {
+        if (pos == s.Length) return true;
+
+        for (int i = pos; i < s.Length; i++)
+        {
+            if(wordDict.Contains(s.Substring(pos, i - pos + 1)) && WordBreakBackTrack(s, wordDict, i + 1))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+}
+```
