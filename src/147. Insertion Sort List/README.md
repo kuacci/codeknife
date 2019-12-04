@@ -87,3 +87,34 @@ public class Solution {
     }
 }
 ```
+
+## 思路 - 迭代 + dummy head
+
+基本参考上面的思路。但是去掉了`List<ListNode>`，从而采用原地替换的方式。
+
+先用一个指针从head开始走，如果head.val > head.next.val 则停下来，准备将head.next移动到前面某个合适的位置。
+
+```csharp
+while(head != null && head.next != null)
+{
+    if(head.val < head.next.val)
+    {
+        head = head.next;
+        continue;
+    }
+```
+
+数组的情况下是从后往前`j--`. 单向链表的问题在于无法倒回去，所以采用从前往后的顺序。用`preNode.next.val`与`head.next.val`进行比较。直到`preNode.next.val` > `head.next.val`成立，说明`head.next`要插入到`preNode`与`preNode.next之`间。因为`preNode.val < head.next.val < preNode.next.val`. 而原先的`head.next`则绕过`head.next`, 指向它后面的节点。
+
+```csharp
+ListNode preNode = newHead;
+while(preNode.next.val < head.next.val) preNode = preNode.next;
+
+ListNode cur = head.next;
+head.next = cur.next;
+cur.next = preNode.next;
+preNode.next = cur;
+```
+
+时间复杂度：O(N^2), 跟插入排序一样时间复杂度为O(N^2)
+空间复杂度：O(N), 原地替换.
