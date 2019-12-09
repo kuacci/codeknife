@@ -19,7 +19,7 @@ Given an integer array nums, find the contiguous subarray within an array (conta
 比较暴力的算法是创建一个同等规模的dp table`int[,] dp = new int[N, N + 1];`用来记录整个乘法的过程，dp[i,i] 存放的是1. `dp[i, j]`存放的是`dp[i, j - 1] * nums[j - 1]`的值。用`int ans`保存在整个运算工程中最大的结果。
 
 时间复杂度：O(N ^ 2)
-空间复杂度: O(N ^ 2)
+空间复杂度: O(N ^ N)
 
 ## 代码 - dp
 
@@ -73,7 +73,8 @@ public class Solution {
 public class Solution {
     public int MaxProduct(int[] nums) {
         int max = int.MinValue, imax = 1, imin = 1;
-        for(int i = 0; i <nums.Length; i++){
+        for(int i = 0; i <nums.Length; i++)
+        {
             if(nums[i] < 0)
             {
               int tmp = imax;
