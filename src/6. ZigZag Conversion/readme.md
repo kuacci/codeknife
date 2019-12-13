@@ -30,70 +30,70 @@ Write the code that will take a string and make this conversion given a number o
 
 ## 思路 - Sort By Row
 
-按照题目的要求，先new 多个`List<char>`数组，然后从上往下将字母放到对应的`List<char>`中，放到底部之后，方向向上，直到顶部。如此往返直到字符串都填充完。
+先创建多个`List<char>`数组，然后从上往下将字母放到对应的`List<char>`中，放到底部之后，方向向上，直到顶部。如此往返直到字符串都填充完。
 
 ## 代码 - Sort By Row
 
 ```csharp
 public class Solution
+{
+    public string Convert(string s, int numRows)
     {
-        public string Convert(string s, int numRows)
+
+        if (numRows == 1) return s;
+
+        List<char>[] zlst = new List<char>[numRows];
+        for (int i = 0; i < zlst.Length; i++)
         {
+            zlst[i] = new List<char>();
+        }
 
-            if (numRows == 1) return s;
+        bool revert = false;
 
-            List<char>[] zlst = new List<char>[numRows];
-            for (int i = 0; i < zlst.Length; i++)
+        char[] chs = s.ToCharArray();
+        int r = 0;
+        int top = 0;
+        int button = numRows - 1;
+
+        for (int i = 0; i < chs.Length; i++)
+        {
+            zlst[r].Add(chs[i]);
+
+            if (revert)  // from button to top
             {
-                zlst[i] = new List<char>();
-            }
-
-            bool revert = false;
-
-            char[] chs = s.ToCharArray();
-            int r = 0;
-            int top = 0;
-            int button = numRows - 1;
-
-            for (int i = 0; i < chs.Length; i++)
-            {
-                zlst[r].Add(chs[i]);
-
-                if (revert)  // from button to top
+                if (r == top)
                 {
-                    if (r == top)
-                    {
-                        r++;
-                        revert = false;
-                    }
-                    else
-                    {
-                        r--;
-                    }
+                    r++;
+                    revert = false;
                 }
                 else
                 {
-                    if (r == button)
-                    {
-                        r--;
-                        revert = true;
-                    }
-                    else
-                    {
-                        r++;
-                    }
+                    r--;
                 }
             }
-
-            StringBuilder sb = new StringBuilder();
-
-            for (int i = 0; i < numRows; i++)
+            else
             {
-                sb.Append(zlst[i].ToArray());
+                if (r == button)
+                {
+                    r--;
+                    revert = true;
+                }
+                else
+                {
+                    r++;
+                }
             }
-            return sb.ToString();
         }
+
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < numRows; i++)
+        {
+            sb.Append(zlst[i].ToArray());
+        }
+        return sb.ToString();
     }
+}
 ```
 
 ## 思路 - Visted by row
