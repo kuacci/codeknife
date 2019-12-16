@@ -19,6 +19,9 @@ You may assume the two numbers do not contain any leading zero, except the numbe
 3. Left 为 Null，但 Right 不为 Null
 4. Right 为 Null，但 Left 不为 Null
 
+时间复杂度：O(N), O(Max(n, m)) = O(N)
+空间复杂度：O(N), 递归使用了栈，且使用了新的一个NodeList. O(2N) = O(N).
+
 ## 代码 - 递归
 
 ```csharp
@@ -61,7 +64,72 @@ public class Solution
 }
 ```
 
-## 思路
+## 思路 - 递归 - 原地替换
+
+上面的思路是建立一个新的ListNode，将l1和l2的结果复制到新的ListNode对象中。其实将结果替换到l1上作为原地替换。这里要接近的问题就是当两条链不一样长的时候，递归过程中必然出现一个ListNode先为null的情况。
+
+1. 如果l1和l2同时为null，作为递归的终点。
+2. 如果l1为null而l2有值，将l2的指针返回，接到上一次l1.next，将l1和l2链起来。
+3. 如果l1不为空而l2有值，正常返回l1即可。
+
+时间复杂度：O(N), O(Min(n, m))
+空间复杂度：O(N),递归使用了栈, 所以空间复杂度为O(N+1) = O(N)
+
+## 代码 - 递归 - 原地替换
+
+```csharp
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     public int val;
+ *     public ListNode next;
+ *     public ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public ListNode AddTwoNumbers(ListNode l1, ListNode l2) {
+        return helper(l1, l2, 0);
+    }
+
+    private ListNode helper(ListNode l1, ListNode l2, int carry)
+    {
+        if(l1 == null && l2 == null)
+        {
+            if(carry == 0) return null;
+            else return new ListNode(carry);
+        }
+        else
+        {
+            if(l1 == null)
+            {
+                l2.val += carry;
+                carry = l2.val / 10;
+                l2.val %= 10;
+                if(carry > 0) l2.next = helper(null, l2.next, carry);
+                return l2;
+            }
+            else if(l2 == null)
+            {
+                l1.val += carry;
+                carry = l1.val / 10;
+                l1.val %= 10;
+                if(carry > 0) l1.next = helper(l1.next, null, carry);
+                return l1;
+            }
+            else
+            {
+                l1.val = l1.val + l2.val + carry;
+                carry = l1.val / 10;
+                l1.val %= 10;
+                l1.next = helper(l1.next, l2.next, carry);
+                return l1;
+            }
+        }
+    }
+}
+```
+
+## 思路 - 迭代
 
 非递归实现时，l1 和 l2 同时从左往右开始相加。
 如果 l1 或者 l2 一条链路上以及为空，则只需要加另外一条链路。
@@ -69,7 +137,7 @@ public class Solution
 如果 l1 和 l2 之和大于 10 ， 则需要进位， 加到cflag上。
 停止条件是l1, l2 都走到头，并且没有进位。如果有进位，则需要多进行一轮循环。
 
-## 代码
+## 代码 - 迭代
 
 ```csharp
 /**
@@ -106,9 +174,7 @@ public class Solution {
             tmp.next = new ListNode(0);
             tmp = tmp.next;
         }
-
         return head;
-
     }
 }
 ```
