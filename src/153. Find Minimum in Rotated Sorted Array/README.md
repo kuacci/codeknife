@@ -51,8 +51,10 @@ public class Solution {
 ![img](image/figure1.png)
 4. 当出现的情况为左侧比右侧高的时候，情况就比较复杂。可以知道延某个点发生过偏转，需要找到这个点。这个时候要通过mid的位置来接近这个点。
 ![img](image/figure2.png)
-5. 通过mid位置的值来确保一侧的数有序，避开min的点被排除的情况。
-6. 
+5. 通过mid位置的值来确保一侧的数有序，避开min的点被排除的情况。如果mid的位置比左侧的大，说明左侧到mid的位置都是有序的，偏转的点在右边，所有将left移动到mid+1是安全的。
+6. 反之，如果5#不成立的情况下， 将right移动到mid所在的位置。排除掉mid到right的有序部分。
+
+通过上述的步骤，快速的移动到最小值的附近，然后返回。
 
 时间复杂度：O(logN)
 空间复杂度：O(1)
@@ -62,29 +64,24 @@ public class Solution {
 ```csharp
 public class Solution {
     public int FindMin(int[] nums) {
-
         int l = 0;
         int r = nums.Length - 1;
         while(l < r)
         {
+            if(nums[l] < nums[r]) return nums[l];
             int mid = (r + l) / 2 ;
             if(mid < nums.Length - 1 && nums[mid] > nums[mid + 1]) return nums[mid + 1];
             if(mid > 0 && nums[mid - 1] > nums[mid]) return nums[mid];
-            if(nums[l] < nums[r])
+
+            if(nums[l] < nums[mid])
             {
-                r = mid;
+                l = mid + 1;
             }
             else
             {
-                if(nums[l] < nums[mid])
-                {
-                    l = mid + 1;
-                }
-                else
-                {
-                    r = mid;
-                }
+                r = mid;
             }
+
         }
         return nums[0];
     }
