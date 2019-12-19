@@ -79,27 +79,23 @@ public class Solution {
 
 ```csharp
 public class Solution {
-    public int LengthOfLongestSubstring(string s)
-    {
-        int max = 0;
-        int l = 0;
-        int r = 0;
-        char[] ch = s.ToCharArray();
-        List<char> clst = new List<char>();
+    public int LengthOfLongestSubstring(string s) {
+        int ans = 0;
+        List<char> memo = new List<char>();
 
-        while (l < ch.Length && r < ch.Length)
+        for(int l = 0, r = 0; r < s.Length;)
         {
-            if (!clst.Contains(ch[r]))
+            if(memo.Contains(s[r]))
             {
-                clst.Add(ch[r++]);
-                max = Math.Max(max, r - l);
+                memo.Remove(s[l++]);
             }
             else
             {
-                clst.Remove(ch[l++]);
+                memo.Add(s[r++]);
+                ans = Math.Max(ans, r - l);
             }
         }
-        return max;
+        return ans;
     }
 }
 ```
@@ -109,6 +105,10 @@ public class Solution {
 sliding window的方式还有可以改进的空间。当遇到重复的字符的时候，l并不需要一步一步的增加。而是可以一次跳到重复的字符所在位置的+1.
 
 ![img](image/1.jpg)
+
+但是也要注意，`l`要处于他能跳到的最远处。举个例子，如`abcbac`. 当r处于位置`s[3] == b`的时候，出现了重复的字符`b`, `l`要指向第一个`b`后面的位置`2`. 下一步`r++`之后，指向了`s[4] == a`, 又出现了重复的字符`a`. 这个时候`a`所在的位置要比之前`b`所在的位置靠左。这种情况下，'l'不能指向`a`所在的位置+1， 这样会造成`l`的左移，导致最后的结果出错。这里就是一个要避免的陷阱。为了避免这个陷阱`l`的复制规则为`l = Math.Max(memo[s[r]), l);`.
+
+返回值ans的计算则是根据`l`和`r`所在的位置得到 `ans = Math.Max(ans, r - l + 1);`.
 
 如何记录重复字符所出现的位置，可以使用一个Dictionary来记录字符出现时候，r所在的位置。因为需要l移动到重复字符的下一个位置，所以要存储的位置是r+1.
 
@@ -125,26 +125,20 @@ sliding window的方式还有可以改进的空间。当遇到重复的字符的
 
 ```csharp
 public class Solution {
-    public int LengthOfLongestSubstring(string s)
-    {
-        int max = 0;
-
-        char[] ch = s.ToCharArray();
-        Dictionary<char, int> cpos = new Dictionary<char, int>();
+    public int LengthOfLongestSubstring(string s) {
+        int ans = 0;
+        Dictionary<char, int> memo = new Dictionary<char, int>();
 
         for(int l = 0, r = 0; r < s.Length; r++)
         {
-            if(cpos.ContainsKey(ch[r]))
+            if(memo.ContainsKey(s[r]))
             {
-                l = l > cpos[ch[r]] ? l : cpos[ch[r]];
+                l = Math.Max(l, memo[s[r]]);
             }
-
-            max = max > r - l + 1 ? max : r - l + 1;
-            cpos[ch[r]] = r + 1;
-
+            memo[s[r]] = r + 1;
+            ans = Math.Max(ans, r - l + 1);
         }
-
-        return max;
+        return ans;
     }
 }
 ```
