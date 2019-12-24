@@ -67,3 +67,40 @@ public class Solution {
     }
 }
 ```
+
+## 思路 - 回溯 - 优化
+
+上述的回溯还存在可以优化的地方。原先使用的是Dicionary的方式存储数字键盘的内容。考虑到输入的数字本来就可以作为索引。所以可以用`string[]`来代替`Dictioary`，用digits某一位的数字来做索引。用这个语句进行数字字符到索引的转换`int c = digits[pos] - '0' - 2;`.例如`abc`存储在`string[]`的0位上。当digits内有个字符的数字是2的时候可以用`'2' - '0' - 2;`转换出索引是'0'.
+回溯的思路跟上面基本一致了。
+
+## 代码 - 回溯 - 优化
+
+```csharp
+public class Solution {
+    string[] map = new string[] { "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz" };
+    public IList<string> LetterCombinations(string digits) {
+        IList<string> ans = new List<string>();
+        if(digits?.Length == 0) return ans;
+        Backtrace(ans, digits, 0, new char[digits.Length]);
+        return ans;
+    }
+
+    private void Backtrace(IList<string> ans, string digits, int pos, char[] chs)
+    {
+        if(pos == digits.Length)
+        {
+            ans.Add(new string(chs));
+        }
+        else
+        {
+            int c = digits[pos] - '0' - 2;
+            for(int i = 0; i < map[c].Length; i++)
+            {
+                chs[pos] = map[c][i];
+                Backtrace(ans, digits, pos + 1, chs);
+            }
+        }
+    }
+
+}
+```
