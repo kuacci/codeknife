@@ -31,65 +31,35 @@ Write the code that will take a string and make this conversion given a number o
 ## 思路 - Sort By Row
 
 先创建多个`List<char>`数组，然后从上往下将字母放到对应的`List<char>`中，放到底部之后，方向向上，直到顶部。如此往返直到字符串都填充完。
+最后在将`List<char>`数组值依次输出到StringBuilder中，再返回string.
+
+时间复杂度：O(N)
+空间复杂度：O(N)
 
 ## 代码 - Sort By Row
 
 ```csharp
-public class Solution
-{
-    public string Convert(string s, int numRows)
-    {
-
-        if (numRows == 1) return s;
-
-        List<char>[] zlst = new List<char>[numRows];
-        for (int i = 0; i < zlst.Length; i++)
+public class Solution {
+    public string Convert(string s, int numRows) {
+        if(numRows == 1) return s;
+        IList<IList<char>> chsList = new List<IList<char>>();
+        for(int i = 0; i < numRows; i++)
         {
-            zlst[i] = new List<char>();
+            chsList.Add(new List<char>());
         }
 
-        bool revert = false;
+        bool isReverse = true;
 
-        char[] chs = s.ToCharArray();
-        int r = 0;
-        int top = 0;
-        int button = numRows - 1;
-
-        for (int i = 0; i < chs.Length; i++)
+        for(int i = 0, j = 0; i < s.Length; i++)
         {
-            zlst[r].Add(chs[i]);
-
-            if (revert)  // from button to top
-            {
-                if (r == top)
-                {
-                    r++;
-                    revert = false;
-                }
-                else
-                {
-                    r--;
-                }
-            }
-            else
-            {
-                if (r == button)
-                {
-                    r--;
-                    revert = true;
-                }
-                else
-                {
-                    r++;
-                }
-            }
+            chsList[j].Add(s[i]);
+            if(j == 0 || j == numRows - 1) isReverse = !isReverse;
+            j += isReverse ? -1 : 1;
         }
-
         StringBuilder sb = new StringBuilder();
-
-        for (int i = 0; i < numRows; i++)
+        foreach(var item in chsList)
         {
-            sb.Append(zlst[i].ToArray());
+            sb.Append(item.ToArray());
         }
         return sb.ToString();
     }
